@@ -1,0 +1,28 @@
+﻿@model TruckingVSM.Models.Trailer
+@{
+    Layout = null;
+}
+@using (Html.BeginForm("AddOrEdit", "Trailer", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.ID)
+    <div class="form-group">
+        <label class="control-label">Số Rơ mooc</label>
+        @Html.EditorFor(model => model.TrailerNo, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.TrailerNo)
+    </div>
+    <div class="form-group">
+        <label class="control-label">Hạn lưu hành</label>
+        @Html.EditorFor(model => model.ExpireDate, new { htmlAttributes = new { @class = "form-control", @id = "expedt" } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Trọng tải</label>
+        @Html.EditorFor(model => model.Weight, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+        <input type="reset" value="Reset" class="btn" />
+    </div>
+}
+<script>
+    $("#expedt").datepicker();
+</script>

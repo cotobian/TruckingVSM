@@ -1,0 +1,138 @@
+﻿@model TruckingVSM.Models.VT_GetTransacstionById_Result
+@{
+    Layout = null;
+}
+
+
+@using (Html.BeginForm("AddOrEdit", "Transaction", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.ConsigneeID, new { htmlAttributes = new { @class = "form-control", @id = "ConsigneeID" } })
+    <div class="form-group">
+        <label class="control-label">Tên khách hàng</label>
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @id = "CustomerName" } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Số Bill</label>
+        @Html.EditorFor(model => model.Bill, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Số Booking</label>
+        @Html.EditorFor(model => model.Booking, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Loại Hàng</label>
+        <select class="form-control" id="Type" name="Type">
+            @foreach (var area in ViewBag.data)
+            {
+                if (area.Name.Equals(Model.Type))
+                {
+                    <option value="@area.Name" selected="selected">@area.Name</option>
+                }
+                else
+                {
+                    <option value="@area.Name">@area.Name</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Hãng tàu</label>
+        <select class="form-control" id="Shipping" name="Shipping">
+            @foreach (var lines in ViewBag.sdata)
+            {
+                if (lines.ShortName.Equals(Model.Shipping))
+                {
+                    <option value="@lines.ShortName" selected="selected">@lines.ShortName</option>
+                }
+                else
+                {
+                    <option value="@lines.ShortName">@lines.ShortName</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Bãi bốc cont</label>
+        @Html.EditorFor(model => model.PickupYard, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Bãi hạ cont</label>
+        @Html.EditorFor(model => model.ReturnYard, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div>
+        <label class="control-label">Kho đóng/giao hàng</label>
+        @Html.TextBoxFor(model => model.StuffingWarehouse, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Mặt hàng</label>
+        @Html.EditorFor(model => model.Commodity, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Yêu cầu khách hàng</label>
+        @Html.EditorFor(model => model.Inquiry, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Ghi chú</label>
+        @Html.TextAreaFor(model => model.Note, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Thay đổi kế hoạch</label>
+        @Html.TextAreaFor(model => model.ChangePlan, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Ngày giao dịch</label>
+        @Html.EditorFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control", @id = "create" } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Ngày vận chuyển</label>
+        @Html.EditorFor(model => model.TransportDate, new { htmlAttributes = new { @class = "form-control", @id = "transdate" } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Ngày tàu chạy</label>
+        @Html.EditorFor(model => model.ExpireDate, new { htmlAttributes = new { @class = "form-control", @id = "expdate" } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Bên thanh toán</label>
+        @Html.EditorFor(model => model.Payer, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Trọng lượng</label>
+        @Html.EditorFor(model => model.Weight, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Người liên hệ</label>
+        @Html.EditorFor(model => model.Caller, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+        <input type="reset" value="Reset" class="btn" />
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        $("#create").prop('disabled', true);
+        $("#CustomerName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("GetCustomerList", "Transaction")',
+                    method: 'POST',
+                    datatype: "json",
+                    data: { term: $("#CustomerName").val() },
+                    success: function (data) {
+                        response($.map(data, function (val, item) {
+                            return {
+                                label: val.Name,
+                                value: val.Name,
+                                customerId: val.ID
+                            }
+                        }))
+                    }
+                })
+            },
+            select: function (event, ui) {
+                $("#ConsigneeID").val(ui.item.customerId);
+            }
+        });
+    })
+</script>

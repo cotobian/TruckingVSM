@@ -1,0 +1,121 @@
+﻿@model TruckingVSM.Models.Trailer
+
+
+@{
+    ViewBag.Title = "Danh mục Rơ mooc";
+}
+
+<h2>Danh mục Rơ mooc</h2>
+
+
+<br />
+
+<div class="container">
+    <a class="btn btn-success" style="margin-bottom:10px;" onclick="PopupForm('@Url.Action("AddOrEdit","Trailer")')"><i class="fa fa-plus"></i> Thêm mới</a>
+    <table id="trailerTable" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Số Rơ mooc</th>
+                <th>Hạn lưu hành</th>
+                <th>Trọng tải</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+@section scripts{
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script>
+        var Popup, dataTable;
+        $(document).ready(function () {
+            dataTable = $("#trailerTable").DataTable({
+                "ajax": {
+                    "url": "/Trailer/GetTrailer",
+                    "type": "GET",
+                    "datatype": "json",
+                },
+                "columns": [
+                    { "data": "TrailerNo" },
+                    { "data": "ExpireDate" },
+                    { "data": "Weight" },
+                    {
+                        "data": "ID", "render": function (data) {
+                            return "<a class='btn btn-default btn-sm' onclick=PopupForm('@Url.Action("AddOrEdit", "Trailer")/" + data + "')><i class='fas fa-pencil-alt' ></i>Edit</a><a class='btn btn-danger btn-sm' style='margin-left:10px' onclick=Delete(" + data + ")><i class='fa fa-trash'></i>Delete</a>";
+                        },
+                        "orderable": false,
+                        "searchable": false,
+                        "width": "150px"
+                    }
+                ],
+            });
+        });
+
+        function PopupForm(url) {
+            var formDiv = $('<div/>');
+            $.get(url)
+            .done(function (response) {
+                formDiv.html(response);
+                Popup = formDiv.dialog({
+                    autoOpen: true,
+                    resizeable: false,
+                    title: 'Fill Trailer Details',
+                    height: 500,
+                    width: 700,
+                    close: function () {
+                        Popup.dialog('destroy').remove();
+                    }
+                });
+            });
+        }
+
+        function SubmitForm(form) {
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid())
+            {
+                $.ajax({
+                    type: "POST",
+                    url: form.action,
+                    data: $(form).serialize(),
+                    success: function (data) {
+                        if (data.success) {
+                            Popup.dialog('close');
+                            dataTable.ajax.reload();
+                            $.notify(data.message, {
+                                globalPosition : "top center",
+                                className : "success"
+                            })
+                        }
+                    }
+                });
+            }
+            return false;
+        }
+
+        function Delete(id) {
+            if (confirm("Are you sure to delete this Trailer?"))
+            {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Delete", "Trailer")/' + id,
+                    success: function (data) {
+                        if(data.success)
+                        {
+                            dataTable.ajax.reload();
+                            $.notify(data.message, {
+                                globalPosition: "top center",
+                                className: "success"
+                            })
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+}
+
+

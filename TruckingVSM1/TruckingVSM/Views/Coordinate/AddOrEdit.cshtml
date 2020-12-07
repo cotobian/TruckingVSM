@@ -1,0 +1,43 @@
+﻿@model TruckingVSM.Models.VT_GetTripOrder_Result
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddOrEdit", "Coordinate", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.ID)
+    <div class="form-group">
+        <label class="control-label">Số Cont</label>
+        @Html.EditorFor(model => model.CntrNo, new { htmlAttributes = new { @class = "form-control" }})
+    </div>
+    <div class="form-group">
+        <label class="control-label">Tài xế</label>
+        @Html.EditorFor(model => model.Driver, new { htmlAttributes = new { @class = "form-control"  } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Số Xe</label>
+        @Html.EditorFor(model => model.TruckNo, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    
+    <div class="form-group">
+        <label class="control-label">Trạng thái</label>
+        @Html.DropDownListFor(model => model.Status,
+                  new List<SelectListItem> {
+                       new SelectListItem { Value = "Ongoing" , Text = "Chưa hoàn tất" },
+                       new SelectListItem { Value = "Complete" , Text = "Đã hoàn tất" }
+                    },
+                  new { @class = "form-control" })   
+    </div>
+    <div class="form-group">
+        <label class="control-label">Ngày hoàn tất</label>
+        @Html.EditorFor(model => model.CompleteDate, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Ghi chú</label>
+        @Html.TextAreaFor(model => model.Note, new  { @class = "form-control"  })
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+}

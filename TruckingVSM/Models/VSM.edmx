@@ -1,0 +1,2425 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TruckingVSMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Consignee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="TaxCode" Type="varchar" MaxLength="20" />
+          <Property Name="staff_cd" Type="nvarchar" MaxLength="50" />
+          <Property Name="update_time" Type="datetime" />
+          <Property Name="AreaID" Type="int" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Driver">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Phone" Type="varchar" MaxLength="20" />
+          <Property Name="License" Type="varchar" MaxLength="30" />
+          <Property Name="staff_cd" Type="nvarchar" MaxLength="50" />
+          <Property Name="update_time" Type="datetime" />
+          <Property Name="LicenseExpire" Type="varchar" MaxLength="20" />
+          <Property Name="CMND" Type="varchar" MaxLength="20" />
+          <Property Name="Address" Type="nvarchar" MaxLength="300" />
+          <Property Name="LicenseDate" Type="varchar" MaxLength="20" />
+          <Property Name="Birthday" Type="varchar" MaxLength="20" />
+          <Property Name="ZaloId" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Fee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="20" />
+          <Property Name="Price" Type="int" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="20" />
+          <Property Name="staff_cd" Type="nvarchar" MaxLength="50" />
+          <Property Name="update_time" Type="datetime" />
+          <Property Name="StdFeeID" Type="int" />
+        </EntityType>
+        <EntityType Name="FeeByConsignee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConsigneeID" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="20" />
+          <Property Name="Price" Type="int" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="20" />
+          <Property Name="StdFeeID" Type="int" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="300" />
+          <Property Name="longitude" Type="varchar" MaxLength="20" />
+          <Property Name="latitude" Type="varchar" MaxLength="20" />
+          <Property Name="staff_cd" Type="nvarchar" MaxLength="50" />
+          <Property Name="update_time" Type="datetime" />
+        </EntityType>
+        <EntityType Name="OrderType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="staff_cd" Type="nvarchar" MaxLength="50" />
+          <Property Name="update_time" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Detail" Type="nvarchar" MaxLength="100" />
+          <Property Name="staff_cd" Type="nvarchar" MaxLength="50" />
+          <Property Name="update_time" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ShippingLine">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="ShortName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="StandardFee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Trailer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrailerNo" Type="varchar" MaxLength="20" />
+          <Property Name="ExpireDate" Type="varchar" MaxLength="20" />
+          <Property Name="staff_cd" Type="nvarchar" MaxLength="50" />
+          <Property Name="update_time" Type="datetime" />
+          <Property Name="Weight" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConsigneeID" Type="int" />
+          <Property Name="Note" Type="nvarchar(max)" />
+          <Property Name="Bill" Type="varchar" MaxLength="50" />
+          <Property Name="Booking" Type="varchar" MaxLength="50" />
+          <Property Name="Type" Type="nvarchar" MaxLength="20" />
+          <Property Name="staff_cd" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="Total" Type="int" />
+          <Property Name="ExpireDate" Type="datetime" />
+          <Property Name="update_time" Type="datetime" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+          <Property Name="Shipping" Type="nvarchar" MaxLength="50" />
+          <Property Name="ChangePlan" Type="nvarchar(max)" />
+          <Property Name="TransportDate" Type="datetime" />
+          <Property Name="PickupYard" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReturnYard" Type="nvarchar" MaxLength="50" />
+          <Property Name="StuffingWarehouse" Type="nvarchar" MaxLength="50" />
+          <Property Name="StuffDate" Type="nvarchar" MaxLength="50" />
+          <Property Name="Commodity" Type="nvarchar" MaxLength="100" />
+          <Property Name="Inquiry" Type="nvarchar(max)" />
+          <Property Name="Payer" Type="nvarchar" MaxLength="100" />
+          <Property Name="Weight" Type="nvarchar" MaxLength="50" />
+          <Property Name="Caller" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TransactionDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionID" Type="int" />
+          <Property Name="FeeName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FeeAmount" Type="int" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="CntrSize" Type="nvarchar" MaxLength="50" />
+          <Property Name="Total" Type="int" />
+          <Property Name="staff_cd" Type="nvarchar" MaxLength="50" />
+          <Property Name="update_time" Type="datetime" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="TransportOrder">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LocationID" Type="int" />
+          <Property Name="TransactionID" Type="int" />
+          <Property Name="CntrSize" Type="nvarchar" MaxLength="50" />
+          <Property Name="CntrNo" Type="varchar" MaxLength="13" />
+          <Property Name="Weight" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="TripID" Type="int" />
+          <Property Name="update_time" Type="datetime" />
+          <Property Name="staff_cd" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+          <Property Name="SendSMS" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Trip">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TruckID" Type="int" />
+          <Property Name="DriverID" Type="int" />
+          <Property Name="CompleteDate" Type="datetime" />
+          <Property Name="staff_cd" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+          <Property Name="update_time" Type="datetime" />
+          <Property Name="Note" Type="nvarchar" MaxLength="500" />
+          <Property Name="SendSMS" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Truck">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TruckNo" Type="varchar" MaxLength="20" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+          <Property Name="DriverID" Type="int" />
+          <Property Name="TrailerID" Type="int" />
+          <Property Name="Expire" Type="varchar" MaxLength="20" />
+          <Property Name="staff_cd" Type="nvarchar" MaxLength="50" />
+          <Property Name="update_time" Type="datetime" />
+          <Property Name="Transit" Type="varchar" MaxLength="20" />
+          <Property Name="OwnRent" Type="bit" />
+        </EntityType>
+        <EntityType Name="TruckInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="XeTot" Type="nvarchar" MaxLength="50" />
+          <Property Name="XeCoKeHoach" Type="nvarchar" MaxLength="50" />
+          <Property Name="XeSuaChua" Type="nvarchar" MaxLength="50" />
+          <Property Name="XeChuaCoTai" Type="nvarchar" MaxLength="50" />
+          <Property Name="XeLuuChuHang" Type="nvarchar" MaxLength="50" />
+          <Property Name="XeThueNgoaiHue" Type="nvarchar" MaxLength="50" />
+          <Property Name="XeThueNgoaiQN" Type="nvarchar" MaxLength="50" />
+          <Property Name="XeThueNgoaiDN" Type="nvarchar" MaxLength="50" />
+          <Property Name="ThieuXeHue" Type="nvarchar" MaxLength="100" />
+          <Property Name="ThieuXeQN" Type="nvarchar" MaxLength="100" />
+          <Property Name="ThieuXeDN" Type="nvarchar" MaxLength="100" />
+          <Property Name="Ngay" Type="date" Nullable="false" />
+          <Property Name="staff_cd" Type="nvarchar" MaxLength="50" />
+          <Property Name="update_time" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Note" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="RolesID" Type="int" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_FeeByConsignee_Consignee">
+          <End Role="Consignee" Type="Self.Consignee" Multiplicity="0..1" />
+          <End Role="FeeByConsignee" Type="Self.FeeByConsignee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consignee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FeeByConsignee">
+              <PropertyRef Name="ConsigneeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="VT_AddDetailFast" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TransactionID" Type="int" Mode="In" />
+          <Parameter Name="ConsigneeID" Type="int" Mode="In" />
+          <Parameter Name="LocationID" Type="int" Mode="In" />
+          <Parameter Name="Quantity" Type="int" Mode="In" />
+          <Parameter Name="CntrSize" Type="varchar" Mode="In" />
+          <Parameter Name="staffcd" Type="varchar" Mode="In" />
+          <Parameter Name="updatetime" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="VT_AddNewTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TruckId" Type="int" Mode="In" />
+          <Parameter Name="DriverId" Type="int" Mode="In" />
+          <Parameter Name="Cntr1" Type="varchar" Mode="In" />
+          <Parameter Name="Cntr2" Type="varchar" Mode="In" />
+          <Parameter Name="OrderId1" Type="int" Mode="In" />
+          <Parameter Name="OrderId2" Type="int" Mode="In" />
+          <Parameter Name="CreateDate" Type="datetime" Mode="In" />
+          <Parameter Name="staff_cd" Type="varchar" Mode="In" />
+          <Parameter Name="Status" Type="varchar" Mode="In" />
+          <Parameter Name="Note" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="VT_AuthenticateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="user" Type="varchar" Mode="In" />
+          <Parameter Name="pass" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="VT_CheckBookExist" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="book" Type="varchar" Mode="In" />
+          <Parameter Name="bill" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="VT_CompleteTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cntrno" Type="varchar" Mode="In" />
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="truckno" Type="varchar" Mode="In" />
+          <Parameter Name="ctime" Type="datetime" Mode="In" />
+          <Parameter Name="status" Type="varchar" Mode="In" />
+          <Parameter Name="Note" Type="nvarchar" Mode="In" />
+          <Parameter Name="Weight" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="VT_DailyPlan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="start" Type="datetime" Mode="In" />
+          <Parameter Name="end" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="VT_DeleteDetailById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VT_DeleteTransactionById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VT_DeleteTripByOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VT_ExtraDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="feename" Type="varchar" Mode="In" />
+          <Parameter Name="quantity" Type="int" Mode="In" />
+          <Parameter Name="feeamount" Type="int" Mode="In" />
+          <Parameter Name="updatetime" Type="datetime" Mode="In" />
+          <Parameter Name="cntrsize" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="VT_GetAllConsigneeWithArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="VT_GetAllFeeByConsignee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="VT_GetCntr20" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="start" Type="datetime" Mode="In" />
+          <Parameter Name="end" Type="datetime" Mode="In" />
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VT_GetCntr40" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="start" Type="datetime" Mode="In" />
+          <Parameter Name="end" Type="datetime" Mode="In" />
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VT_GetCntr45" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="start" Type="datetime" Mode="In" />
+          <Parameter Name="end" Type="datetime" Mode="In" />
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VT_GetCompleteTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="VT_GetConsigneeWithArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VT_GetCustomerWithTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="start" Type="datetime" Mode="In" />
+          <Parameter Name="end" Type="datetime" Mode="In" />
+          <Parameter Name="area" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VT_GetDetailById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VT_GetFeeByConsignee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VT_GetLiftingFee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="CntrSize" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="VT_GetNoteByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VT_GetRevenueByCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="start" Type="datetime" Mode="In" />
+          <Parameter Name="end" Type="datetime" Mode="In" />
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VT_GetSMSInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VT_GetTransacstionById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VT_GetTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="VT_GetTransactionByDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="start" Type="datetime" Mode="In" />
+          <Parameter Name="end" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="VT_GetTransactionDetailById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VT_GetTransportOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="type" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="VT_GetTripByDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="start" Type="datetime" Mode="In" />
+          <Parameter Name="end" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="VT_GetTripOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VT_GetTruck" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="VT_GetTruckInFo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VT_RemainOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="type" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="VT_RemoveDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="feename" Type="varchar" Mode="In" />
+          <Parameter Name="quantity" Type="int" Mode="In" />
+          <Parameter Name="feeamount" Type="int" Mode="In" />
+          <Parameter Name="updatetime" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="VT_ReportAllRevenue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="start" Type="datetime" Mode="In" />
+          <Parameter Name="end" Type="datetime" Mode="In" />
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="cntrsize" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="VT_ResetTotalPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VT_RevenueByCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="start" Type="datetime" Mode="In" />
+          <Parameter Name="end" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="VT_RevenueByMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="start" Type="datetime" Mode="In" />
+          <Parameter Name="end" Type="datetime" Mode="In" />
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VT_TransportOrderN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="VT_TransportOrderNN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="VT_TransportOrderNX" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="VT_TransportOrderX" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="VT_TripByDriver" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="start" Type="datetime" Mode="In" />
+          <Parameter Name="end" Type="datetime" Mode="In" />
+        </Function>
+        <EntityContainer Name="TruckingVSMModelStoreContainer">
+          <EntitySet Name="Area" EntityType="Self.Area" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Consignee" EntityType="Self.Consignee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Driver" EntityType="Self.Driver" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fee" EntityType="Self.Fee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FeeByConsignee" EntityType="Self.FeeByConsignee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderType" EntityType="Self.OrderType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShippingLine" EntityType="Self.ShippingLine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StandardFee" EntityType="Self.StandardFee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trailer" EntityType="Self.Trailer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransactionDetail" EntityType="Self.TransactionDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransportOrder" EntityType="Self.TransportOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trip" EntityType="Self.Trip" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Truck" EntityType="Self.Truck" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TruckInfo" EntityType="Self.TruckInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FeeByConsignee_Consignee" Association="Self.FK_FeeByConsignee_Consignee">
+            <End Role="Consignee" EntitySet="Consignee" />
+            <End Role="FeeByConsignee" EntitySet="FeeByConsignee" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TruckingVSMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Consignee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TaxCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="staff_cd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="update_time" Type="DateTime" Precision="3" />
+          <Property Name="AreaID" Type="Int32" />
+          <Property Name="ShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FeeByConsignees" Relationship="Self.FK_FeeByConsignee_Consignee" FromRole="Consignee" ToRole="FeeByConsignee" />
+          <NavigationProperty Name="Transactions" Relationship="Self.FK_Transaction_Consignee" FromRole="Consignee" ToRole="Transaction" />
+        </EntityType>
+        <EntityType Name="Driver">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="License" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="staff_cd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="update_time" Type="DateTime" Precision="3" />
+          <Property Name="LicenseExpire" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CMND" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="LicenseDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Birthday" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ZaloId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Fee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShortName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Int32" />
+          <Property Name="Unit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="staff_cd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="update_time" Type="DateTime" Precision="3" />
+          <Property Name="StdFeeID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="FeeByConsignee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConsigneeID" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShortName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Int32" />
+          <Property Name="Unit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Consignee" Relationship="Self.FK_FeeByConsignee_Consignee" FromRole="FeeByConsignee" ToRole="Consignee" />
+          <Property Name="StdFeeID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="longitude" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="latitude" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="staff_cd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="update_time" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="OrderType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="staff_cd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="update_time" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Detail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="staff_cd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="update_time" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ShippingLine">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Trailer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrailerNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ExpireDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="staff_cd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="update_time" Type="DateTime" Precision="3" />
+          <Property Name="Weight" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConsigneeID" Type="Int32" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Bill" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Booking" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="staff_cd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="Total" Type="Int32" />
+          <Property Name="ExpireDate" Type="DateTime" Precision="3" />
+          <Property Name="update_time" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Shipping" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ChangePlan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TransportDate" Type="DateTime" Precision="3" />
+          <Property Name="PickupYard" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StuffingWarehouse" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StuffDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Commodity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Inquiry" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Payer" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Weight" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Caller" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Consignee" Relationship="Self.FK_Transaction_Consignee" FromRole="Transaction" ToRole="Consignee" />
+          <NavigationProperty Name="TransactionDetails" Relationship="Self.FK_TransactionDetail_Transaction" FromRole="Transaction" ToRole="TransactionDetail" />
+          <Property Name="ReturnYard" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TransactionDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionID" Type="Int32" />
+          <Property Name="FeeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FeeAmount" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="CntrSize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Total" Type="Int32" />
+          <Property Name="staff_cd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="update_time" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Transaction" Relationship="Self.FK_TransactionDetail_Transaction" FromRole="TransactionDetail" ToRole="Transaction" />
+        </EntityType>
+        <EntityType Name="TransportOrder">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LocationID" Type="Int32" />
+          <Property Name="TransactionID" Type="Int32" />
+          <Property Name="CntrSize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CntrNo" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="TripID" Type="Int32" />
+          <Property Name="update_time" Type="DateTime" Precision="3" />
+          <Property Name="staff_cd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SendSMS" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Weight" Type="Decimal" Precision="12" Scale="2" />
+        </EntityType>
+        <EntityType Name="Trip">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TruckID" Type="Int32" />
+          <Property Name="DriverID" Type="Int32" />
+          <Property Name="CompleteDate" Type="DateTime" Precision="3" />
+          <Property Name="staff_cd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="update_time" Type="DateTime" Precision="3" />
+          <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SendSMS" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Truck">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TruckNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DriverID" Type="Int32" />
+          <Property Name="TrailerID" Type="Int32" />
+          <Property Name="Expire" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="staff_cd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="update_time" Type="DateTime" Precision="3" />
+          <Property Name="Transit" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="OwnRent" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="TruckInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="XeTot" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="XeCoKeHoach" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="XeSuaChua" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="XeChuaCoTai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="XeLuuChuHang" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="XeThueNgoaiHue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="XeThueNgoaiQN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="XeThueNgoaiDN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ThieuXeHue" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ThieuXeQN" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ThieuXeDN" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Ngay" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="staff_cd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="update_time" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RolesID" Type="Int32" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_FeeByConsignee_Consignee">
+          <End Role="Consignee" Type="Self.Consignee" Multiplicity="0..1" />
+          <End Role="FeeByConsignee" Type="Self.FeeByConsignee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consignee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FeeByConsignee">
+              <PropertyRef Name="ConsigneeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transaction_Consignee">
+          <End Role="Consignee" Type="Self.Consignee" Multiplicity="0..1" />
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consignee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="ConsigneeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionDetail_Transaction">
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="0..1" />
+          <End Role="TransactionDetail" Type="Self.TransactionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TransactionDetail">
+              <PropertyRef Name="TransactionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TruckingVSMEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Areas" EntityType="Self.Area" />
+          <EntitySet Name="Consignees" EntityType="Self.Consignee" />
+          <EntitySet Name="Drivers" EntityType="Self.Driver" />
+          <EntitySet Name="Fees" EntityType="Self.Fee" />
+          <EntitySet Name="FeeByConsignees" EntityType="Self.FeeByConsignee" />
+          <EntitySet Name="Locations" EntityType="Self.Location" />
+          <EntitySet Name="OrderTypes" EntityType="Self.OrderType" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="ShippingLines" EntityType="Self.ShippingLine" />
+          <EntitySet Name="Trailers" EntityType="Self.Trailer" />
+          <EntitySet Name="Transactions" EntityType="Self.Transaction" />
+          <EntitySet Name="TransactionDetails" EntityType="Self.TransactionDetail" />
+          <EntitySet Name="TransportOrders" EntityType="Self.TransportOrder" />
+          <EntitySet Name="Trips" EntityType="Self.Trip" />
+          <EntitySet Name="Trucks" EntityType="Self.Truck" />
+          <EntitySet Name="TruckInfoes" EntityType="Self.TruckInfo" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_FeeByConsignee_Consignee" Association="Self.FK_FeeByConsignee_Consignee">
+            <End Role="Consignee" EntitySet="Consignees" />
+            <End Role="FeeByConsignee" EntitySet="FeeByConsignees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transaction_Consignee" Association="Self.FK_Transaction_Consignee">
+            <End Role="Consignee" EntitySet="Consignees" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionDetail_Transaction" Association="Self.FK_TransactionDetail_Transaction">
+            <End Role="Transaction" EntitySet="Transactions" />
+            <End Role="TransactionDetail" EntitySet="TransactionDetails" />
+          </AssociationSet>
+          <FunctionImport Name="VT_AddDetailFast">
+            <Parameter Name="TransactionID" Mode="In" Type="Int32" />
+            <Parameter Name="ConsigneeID" Mode="In" Type="Int32" />
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="Quantity" Mode="In" Type="Int32" />
+            <Parameter Name="CntrSize" Mode="In" Type="String" />
+            <Parameter Name="staffcd" Mode="In" Type="String" />
+            <Parameter Name="updatetime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="VT_AddNewTrip">
+            <Parameter Name="TruckId" Mode="In" Type="Int32" />
+            <Parameter Name="DriverId" Mode="In" Type="Int32" />
+            <Parameter Name="Cntr1" Mode="In" Type="String" />
+            <Parameter Name="Cntr2" Mode="In" Type="String" />
+            <Parameter Name="OrderId1" Mode="In" Type="Int32" />
+            <Parameter Name="OrderId2" Mode="In" Type="Int32" />
+            <Parameter Name="CreateDate" Mode="In" Type="DateTime" />
+            <Parameter Name="staff_cd" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+            <Parameter Name="Note" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="VT_AuthenticateUser" ReturnType="Collection(TruckingVSMModel.VT_AuthenticateUser_Result)">
+            <Parameter Name="user" Mode="In" Type="String" />
+            <Parameter Name="pass" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="VT_CheckBookExist" ReturnType="Collection(TruckingVSMModel.VT_CheckBookExist_Result)">
+            <Parameter Name="book" Mode="In" Type="String" />
+            <Parameter Name="bill" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="VT_CompleteTrip">
+            <Parameter Name="cntrno" Mode="In" Type="String" />
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="truckno" Mode="In" Type="String" />
+            <Parameter Name="ctime" Mode="In" Type="DateTime" />
+            <Parameter Name="status" Mode="In" Type="String" />
+            <Parameter Name="Note" Mode="In" Type="String" />
+            <Parameter Name="Weight" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="VT_DeleteDetailById">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_DeleteTransactionById">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_DeleteTripByOrder">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_ExtraDetail">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="feename" Mode="In" Type="String" />
+            <Parameter Name="quantity" Mode="In" Type="Int32" />
+            <Parameter Name="feeamount" Mode="In" Type="Int32" />
+            <Parameter Name="updatetime" Mode="In" Type="DateTime" />
+            <Parameter Name="cntrsize" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetAllConsigneeWithArea" ReturnType="Collection(TruckingVSMModel.VT_GetAllConsigneeWithArea_Result)" />
+          <FunctionImport Name="VT_GetAllFeeByConsignee" ReturnType="Collection(TruckingVSMModel.VT_GetAllFeeByConsignee_Result)" />
+          <FunctionImport Name="VT_GetCntr20" ReturnType="Collection(Int32)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetCntr40" ReturnType="Collection(Int32)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetCntr45" ReturnType="Collection(Int32)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetCompleteTrip" ReturnType="Collection(TruckingVSMModel.VT_GetCompleteTrip_Result)" />
+          <FunctionImport Name="VT_GetConsigneeWithArea" ReturnType="Collection(TruckingVSMModel.VT_GetConsigneeWithArea_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetCustomerWithTransaction" ReturnType="Collection(TruckingVSMModel.VT_GetCustomerWithTransaction_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+            <Parameter Name="area" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetDetailById" ReturnType="Collection(TruckingVSMModel.VT_GetDetailById_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetFeeByConsignee" ReturnType="Collection(TruckingVSMModel.VT_GetFeeByConsignee_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetLiftingFee" ReturnType="Collection(Int32)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="CntrSize" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetNoteByName" ReturnType="Collection(String)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetRevenueByCustomer" ReturnType="Collection(Int32)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetSMSInfo" ReturnType="Collection(TruckingVSMModel.VT_GetSMSInfo_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetTransacstionById" ReturnType="Collection(TruckingVSMModel.VT_GetTransacstionById_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetTransaction" ReturnType="Collection(TruckingVSMModel.VT_GetTransaction_Result)" />
+          <FunctionImport Name="VT_GetTransactionByDate" ReturnType="Collection(TruckingVSMModel.VT_GetTransactionByDate_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetTransactionDetailById" ReturnType="Collection(TruckingVSMModel.VT_GetTransactionDetailById_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetTransportOrder" ReturnType="Collection(String)">
+          <Parameter Name="type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetTripByDate" ReturnType="Collection(TruckingVSMModel.VT_GetTripByDate_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetTripOrder" ReturnType="Collection(TruckingVSMModel.VT_GetTripOrder_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetTruck" ReturnType="Collection(TruckingVSMModel.VT_GetTruck_Result)" />
+          <FunctionImport Name="VT_RemainOrder" ReturnType="Collection(Int32)">
+          <Parameter Name="type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="VT_RemoveDetail">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="feename" Mode="In" Type="String" />
+            <Parameter Name="quantity" Mode="In" Type="Int32" />
+            <Parameter Name="feeamount" Mode="In" Type="Int32" />
+            <Parameter Name="updatetime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="VT_ReportAllRevenue" ReturnType="Collection(Int32)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="cntrsize" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="VT_ResetTotalPrice">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_RevenueByCustomer" ReturnType="Collection(TruckingVSMModel.VT_RevenueByCustomer_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="VT_RevenueByMonth" ReturnType="Collection(TruckingVSMModel.VT_RevenueByMonth_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_TransportOrderN" ReturnType="Collection(String)" />
+          <FunctionImport Name="VT_TransportOrderNN" ReturnType="Collection(String)" />
+          <FunctionImport Name="VT_TransportOrderNX" ReturnType="Collection(String)" />
+          <FunctionImport Name="VT_TransportOrderX" ReturnType="Collection(String)" />
+          <FunctionImport Name="VT_TripByDriver" ReturnType="Collection(TruckingVSMModel.VT_TripByDriver_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetTransacstionById1" ReturnType="Collection(TruckingVSMModel.VT_GetTransacstionById_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_DailyPlan" ReturnType="Collection(TruckingVSMModel.VT_DailyPlan_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="VT_DailyPlan1" ReturnType="Collection(TruckingVSMModel.VT_DailyPlan_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetTripByDate1" ReturnType="Collection(TruckingVSMModel.VT_GetTripByDate_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetTransacstionById2" ReturnType="Collection(TruckingVSMModel.VT_GetTransacstionById_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetTransactionByDate1" ReturnType="Collection(TruckingVSMModel.VT_GetTransactionByDate_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetTransacstionById3" ReturnType="Collection(TruckingVSMModel.VT_GetTransacstionById_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetTripByDate2" ReturnType="Collection(TruckingVSMModel.VT_GetTripByDate_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetTripByDate3" ReturnType="Collection(TruckingVSMModel.VT_GetTripByDate_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetSMSInfo1" ReturnType="Collection(TruckingVSMModel.VT_GetSMSInfo_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetSMSInfo2" ReturnType="Collection(TruckingVSMModel.VT_GetSMSInfo_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="StandardFees" EntityType="TruckingVSMModel.StandardFee" />
+          <FunctionImport Name="VT_GetFeeByConsignee1" ReturnType="Collection(TruckingVSMModel.VT_GetFeeByConsignee_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_DailyPlan2" ReturnType="Collection(TruckingVSMModel.VT_DailyPlan_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetTransacstionById4" ReturnType="Collection(TruckingVSMModel.VT_GetTransacstionById_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetTruckInFo" ReturnType="Collection(TruckingVSMModel.VT_GetTruckInFo_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetTruckInFo1" ReturnType="Collection(TruckingVSMModel.VT_GetTruckInFo_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_DailyPlan3" ReturnType="Collection(TruckingVSMModel.VT_DailyPlan_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetTripOrder1" ReturnType="Collection(TruckingVSMModel.VT_GetTripOrder_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_DailyPlan4" ReturnType="Collection(TruckingVSMModel.VT_DailyPlan_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetTripByDate4" ReturnType="Collection(TruckingVSMModel.VT_GetTripByDate_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="Units" EntityType="TruckingVSMModel.Unit" />
+        </EntityContainer>
+        <ComplexType Name="VT_AuthenticateUser_Result">
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="RoleName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="VT_CheckBookExist_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="ConsigneeID" Nullable="true" />
+          <Property Type="String" Name="Note" Nullable="true" />
+          <Property Type="String" Name="Bill" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Booking" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Type" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="staff_cd" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+          <Property Type="DateTime" Name="ExpireDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="update_time" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Shipping" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ChangePlan" Nullable="true" />
+          <Property Type="DateTime" Name="TransportDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="PickupYard" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="StuffingWarehouse" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="StuffDate" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Commodity" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Inquiry" Nullable="true" />
+          <Property Type="String" Name="Payer" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Weight" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Caller" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="VT_GetAllConsigneeWithArea_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="TaxCode" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ShortName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="area" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="aid" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="VT_GetAllFeeByConsignee_Result">
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Price" Nullable="true" />
+          <Property Type="String" Name="ShortName" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Unit" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Consignee" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="cid" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="VT_GetCompleteTrip_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="CntrNo" Nullable="true" MaxLength="13" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="TruckNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Driver" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="CreateDate" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="CompleteDate" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="VT_GetConsigneeWithArea_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="TaxCode" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ShortName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="area" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="aid" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="VT_GetCustomerWithTransaction_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="VT_GetDetailById_Result">
+          <Property Type="String" Name="FeeName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="FeeAmount" Nullable="true" />
+          <Property Type="Int32" Name="Quantity" Nullable="true" />
+          <Property Type="String" Name="CntrSize" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="VT_GetFeeByConsignee_Result">
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Price" Nullable="true" />
+          <Property Type="String" Name="ShortName" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Unit" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Consignee" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="cid" Nullable="true" />
+          <Property Type="Int32" Name="fid" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="VT_GetSMSInfo_Result">
+          <Property Type="String" Name="Type" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="bookbill" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ShortName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CntrSize" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PickupYard" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="transdate" Nullable="true" MaxLength="41" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ZaloId" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Shipping" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Caller" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Inquiry" Nullable="true" />
+          <Property Type="String" Name="ExpireDate" Nullable="true" MaxLength="51" />
+          <Property Type="String" Name="Note" Nullable="true" />
+          <Property Type="String" Name="ReturnYard" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Location" Nullable="true" MaxLength="300" />
+        </ComplexType>
+        <ComplexType Name="VT_GetTransacstionById_Result">
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="ConsigneeID" Nullable="true" />
+          <Property Type="String" Name="Bill" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Note" Nullable="true" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Shipping" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ChangePlan" Nullable="true" />
+          <Property Type="String" Name="PickupYard" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CreateDate" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="ExpireDate" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="TransportDate" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="StuffingWarehouse" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Commodity" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Inquiry" Nullable="true" />
+          <Property Type="String" Name="Payer" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Weight" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Caller" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="StuffDate" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Booking" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ReturnYard" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Type" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="VT_GetTransaction_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Bill" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Booking" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DateTime" Nullable="true" MaxLength="25" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="VT_GetTransactionByDate_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Note" Nullable="true" />
+          <Property Type="String" Name="Bill" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Shipping" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Type" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="yard" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Commodity" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Inquiry" Nullable="true" />
+          <Property Type="String" Name="Payer" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Weight" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Caller" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ExpireDate" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="DateTime" Nullable="true" MaxLength="25" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+          <Property Type="Int32" Name="cntr20" Nullable="false" />
+          <Property Type="Int32" Name="cntr40" Nullable="false" />
+          <Property Type="Int32" Name="cntr40dc" Nullable="false" />
+          <Property Type="Int32" Name="cntr40hc" Nullable="false" />
+          <Property Type="Int32" Name="cntr45" Nullable="false" />
+          <Property Type="String" Name="returnyard" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="VT_GetTransactionDetailById_Result">
+          <Property Type="String" Name="FeeName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="FeeAmount" Nullable="true" />
+          <Property Type="Int32" Name="Quantity" Nullable="true" />
+          <Property Type="String" Name="CntrSize" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="VT_GetTripByDate_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="CntrNo" Nullable="true" MaxLength="13" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TruckNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="PickupYard" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Commodity" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Driver" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="CreateDate" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Note" Nullable="true" />
+          <Property Type="String" Name="stuffwh" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="stuffdate" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CompleteDate" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="doc" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="CntrSize" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TripNote" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Shipping" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SendSMS" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="ZaloId" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ReturnYard" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Type" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="Weight" Nullable="true" Precision="12" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="VT_GetTripOrder_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="CntrNo" Nullable="true" MaxLength="13" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="TruckNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Note" Nullable="true" />
+          <Property Type="String" Name="Driver" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="CreateDate" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="CompleteDate" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="10" />
+          <Property Type="Decimal" Name="Weight" Nullable="true" Precision="12" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="VT_GetTruck_Result">
+          <Property Type="String" Name="TruckNo" Nullable="true" MaxLength="20" />
+          <Property Type="Boolean" Name="OwnRent" Nullable="true" />
+          <Property Type="String" Name="Transit" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Weight" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Driver" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="TrailerNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="ExpireDate" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="TrailerDate" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="VT_RevenueByCustomer_Result">
+          <Property Type="String" Name="Type" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="doc" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="TruckNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="CntrNo" Nullable="true" MaxLength="13" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="300" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="CntrSize" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="FeeAmount" Nullable="true" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+          <Property Type="String" Name="Note" Nullable="true" />
+          <Property Type="Int32" Name="TransID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="VT_RevenueByMonth_Result">
+          <Property Type="String" Name="CreateDate" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Type" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Booking" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="FeeName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="FeeAmount" Nullable="true" />
+          <Property Type="Int32" Name="Quantity" Nullable="true" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+          <Property Type="String" Name="Unit" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="VT_TripByDriver_Result">
+          <Property Type="String" Name="CntrNo" Nullable="true" MaxLength="13" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="Type" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="TruckNo" Nullable="true" MaxLength="20" />
+          <Property Type="Boolean" Name="OwnRent" Nullable="true" />
+          <Property Type="String" Name="Driver" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="CreateDate" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="CompleteDate" Nullable="true" MaxLength="25" />
+        </ComplexType>
+        <ComplexType Name="VT_DailyPlan_Result">
+          <Property Type="String" Name="TransportDate" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="laddress" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="Caller" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Inquiry" Nullable="true" />
+          <Property Type="Int32" Name="cntr20" Nullable="false" />
+          <Property Type="Int32" Name="cntr40dc" Nullable="false" />
+          <Property Type="Int32" Name="cntr40hc" Nullable="false" />
+          <Property Type="Int32" Name="cntr45" Nullable="false" />
+          <Property Type="String" Name="doc" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Shipping" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Commodity" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Type" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ExpireDate" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="bainang" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="baiha" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Payer" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="TruckNo" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="Weight" Nullable="true" Precision="12" Scale="2" />
+          <Property Type="String" Name="driver" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="TripNote" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="CntrNo" Nullable="true" MaxLength="13" />
+        </ComplexType>
+        <EntityType Name="StandardFee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="VT_GetTruckInFo_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="TruckNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Transit" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Expire" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="TrailerNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="DriverID" Nullable="true" />
+          <Property Type="Int32" Name="TrailerID" Nullable="true" />
+          <Property Type="Boolean" Name="OwnRent" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TruckingVSMModelStoreContainer" CdmEntityContainer="TruckingVSMEntities">
+          <EntitySetMapping Name="Areas">
+            <EntityTypeMapping TypeName="TruckingVSMModel.Area">
+              <MappingFragment StoreEntitySet="Area">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Consignees">
+            <EntityTypeMapping TypeName="TruckingVSMModel.Consignee">
+              <MappingFragment StoreEntitySet="Consignee">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="TaxCode" ColumnName="TaxCode" />
+                <ScalarProperty Name="staff_cd" ColumnName="staff_cd" />
+                <ScalarProperty Name="update_time" ColumnName="update_time" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Drivers">
+            <EntityTypeMapping TypeName="TruckingVSMModel.Driver">
+              <MappingFragment StoreEntitySet="Driver">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="License" ColumnName="License" />
+                <ScalarProperty Name="staff_cd" ColumnName="staff_cd" />
+                <ScalarProperty Name="update_time" ColumnName="update_time" />
+                <ScalarProperty Name="LicenseExpire" ColumnName="LicenseExpire" />
+                <ScalarProperty Name="CMND" ColumnName="CMND" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="LicenseDate" ColumnName="LicenseDate" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="ZaloId" ColumnName="ZaloId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fees">
+            <EntityTypeMapping TypeName="TruckingVSMModel.Fee">
+              <MappingFragment StoreEntitySet="Fee">
+                <ScalarProperty Name="StdFeeID" ColumnName="StdFeeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="staff_cd" ColumnName="staff_cd" />
+                <ScalarProperty Name="update_time" ColumnName="update_time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FeeByConsignees">
+            <EntityTypeMapping TypeName="TruckingVSMModel.FeeByConsignee">
+              <MappingFragment StoreEntitySet="FeeByConsignee">
+                <ScalarProperty Name="StdFeeID" ColumnName="StdFeeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ConsigneeID" ColumnName="ConsigneeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="TruckingVSMModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="staff_cd" ColumnName="staff_cd" />
+                <ScalarProperty Name="update_time" ColumnName="update_time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderTypes">
+            <EntityTypeMapping TypeName="TruckingVSMModel.OrderType">
+              <MappingFragment StoreEntitySet="OrderType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="staff_cd" ColumnName="staff_cd" />
+                <ScalarProperty Name="update_time" ColumnName="update_time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="TruckingVSMModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Detail" ColumnName="Detail" />
+                <ScalarProperty Name="staff_cd" ColumnName="staff_cd" />
+                <ScalarProperty Name="update_time" ColumnName="update_time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShippingLines">
+            <EntityTypeMapping TypeName="TruckingVSMModel.ShippingLine">
+              <MappingFragment StoreEntitySet="ShippingLine">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trailers">
+            <EntityTypeMapping TypeName="TruckingVSMModel.Trailer">
+              <MappingFragment StoreEntitySet="Trailer">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TrailerNo" ColumnName="TrailerNo" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="staff_cd" ColumnName="staff_cd" />
+                <ScalarProperty Name="update_time" ColumnName="update_time" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="TruckingVSMModel.Transaction">
+              <MappingFragment StoreEntitySet="Transaction">
+                <ScalarProperty Name="ReturnYard" ColumnName="ReturnYard" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ConsigneeID" ColumnName="ConsigneeID" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Bill" ColumnName="Bill" />
+                <ScalarProperty Name="Booking" ColumnName="Booking" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="staff_cd" ColumnName="staff_cd" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="update_time" ColumnName="update_time" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="ChangePlan" ColumnName="ChangePlan" />
+                <ScalarProperty Name="TransportDate" ColumnName="TransportDate" />
+                <ScalarProperty Name="PickupYard" ColumnName="PickupYard" />
+                <ScalarProperty Name="StuffingWarehouse" ColumnName="StuffingWarehouse" />
+                <ScalarProperty Name="StuffDate" ColumnName="StuffDate" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="Payer" ColumnName="Payer" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransactionDetails">
+            <EntityTypeMapping TypeName="TruckingVSMModel.TransactionDetail">
+              <MappingFragment StoreEntitySet="TransactionDetail">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="FeeName" ColumnName="FeeName" />
+                <ScalarProperty Name="FeeAmount" ColumnName="FeeAmount" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="CntrSize" ColumnName="CntrSize" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="staff_cd" ColumnName="staff_cd" />
+                <ScalarProperty Name="update_time" ColumnName="update_time" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransportOrders">
+            <EntityTypeMapping TypeName="TruckingVSMModel.TransportOrder">
+              <MappingFragment StoreEntitySet="TransportOrder">
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="CntrSize" ColumnName="CntrSize" />
+                <ScalarProperty Name="CntrNo" ColumnName="CntrNo" />
+                <ScalarProperty Name="TripID" ColumnName="TripID" />
+                <ScalarProperty Name="update_time" ColumnName="update_time" />
+                <ScalarProperty Name="staff_cd" ColumnName="staff_cd" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="SendSMS" ColumnName="SendSMS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trips">
+            <EntityTypeMapping TypeName="TruckingVSMModel.Trip">
+              <MappingFragment StoreEntitySet="Trip">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TruckID" ColumnName="TruckID" />
+                <ScalarProperty Name="DriverID" ColumnName="DriverID" />
+                <ScalarProperty Name="CompleteDate" ColumnName="CompleteDate" />
+                <ScalarProperty Name="staff_cd" ColumnName="staff_cd" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="update_time" ColumnName="update_time" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="SendSMS" ColumnName="SendSMS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trucks">
+            <EntityTypeMapping TypeName="TruckingVSMModel.Truck">
+              <MappingFragment StoreEntitySet="Truck">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DriverID" ColumnName="DriverID" />
+                <ScalarProperty Name="TrailerID" ColumnName="TrailerID" />
+                <ScalarProperty Name="Expire" ColumnName="Expire" />
+                <ScalarProperty Name="staff_cd" ColumnName="staff_cd" />
+                <ScalarProperty Name="update_time" ColumnName="update_time" />
+                <ScalarProperty Name="Transit" ColumnName="Transit" />
+                <ScalarProperty Name="OwnRent" ColumnName="OwnRent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TruckInfoes">
+            <EntityTypeMapping TypeName="TruckingVSMModel.TruckInfo">
+              <MappingFragment StoreEntitySet="TruckInfo">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="XeTot" ColumnName="XeTot" />
+                <ScalarProperty Name="XeCoKeHoach" ColumnName="XeCoKeHoach" />
+                <ScalarProperty Name="XeSuaChua" ColumnName="XeSuaChua" />
+                <ScalarProperty Name="XeChuaCoTai" ColumnName="XeChuaCoTai" />
+                <ScalarProperty Name="XeLuuChuHang" ColumnName="XeLuuChuHang" />
+                <ScalarProperty Name="XeThueNgoaiHue" ColumnName="XeThueNgoaiHue" />
+                <ScalarProperty Name="XeThueNgoaiQN" ColumnName="XeThueNgoaiQN" />
+                <ScalarProperty Name="XeThueNgoaiDN" ColumnName="XeThueNgoaiDN" />
+                <ScalarProperty Name="ThieuXeHue" ColumnName="ThieuXeHue" />
+                <ScalarProperty Name="ThieuXeQN" ColumnName="ThieuXeQN" />
+                <ScalarProperty Name="ThieuXeDN" ColumnName="ThieuXeDN" />
+                <ScalarProperty Name="Ngay" ColumnName="Ngay" />
+                <ScalarProperty Name="staff_cd" ColumnName="staff_cd" />
+                <ScalarProperty Name="update_time" ColumnName="update_time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="TruckingVSMModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RolesID" ColumnName="RolesID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="VT_AddDetailFast" FunctionName="TruckingVSMModel.Store.VT_AddDetailFast" />
+          <FunctionImportMapping FunctionImportName="VT_AddNewTrip" FunctionName="TruckingVSMModel.Store.VT_AddNewTrip" />
+          <FunctionImportMapping FunctionImportName="VT_AuthenticateUser" FunctionName="TruckingVSMModel.Store.VT_AuthenticateUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_AuthenticateUser_Result">
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_CheckBookExist" FunctionName="TruckingVSMModel.Store.VT_CheckBookExist">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_CheckBookExist_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ConsigneeID" ColumnName="ConsigneeID" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Bill" ColumnName="Bill" />
+                <ScalarProperty Name="Booking" ColumnName="Booking" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="staff_cd" ColumnName="staff_cd" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="update_time" ColumnName="update_time" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="ChangePlan" ColumnName="ChangePlan" />
+                <ScalarProperty Name="TransportDate" ColumnName="TransportDate" />
+                <ScalarProperty Name="PickupYard" ColumnName="PickupYard" />
+                <ScalarProperty Name="StuffingWarehouse" ColumnName="StuffingWarehouse" />
+                <ScalarProperty Name="StuffDate" ColumnName="StuffDate" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="Payer" ColumnName="Payer" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_CompleteTrip" FunctionName="TruckingVSMModel.Store.VT_CompleteTrip" />
+          <FunctionImportMapping FunctionImportName="VT_DeleteDetailById" FunctionName="TruckingVSMModel.Store.VT_DeleteDetailById" />
+          <FunctionImportMapping FunctionImportName="VT_DeleteTransactionById" FunctionName="TruckingVSMModel.Store.VT_DeleteTransactionById" />
+          <FunctionImportMapping FunctionImportName="VT_DeleteTripByOrder" FunctionName="TruckingVSMModel.Store.VT_DeleteTripByOrder" />
+          <FunctionImportMapping FunctionImportName="VT_ExtraDetail" FunctionName="TruckingVSMModel.Store.VT_ExtraDetail" />
+          <FunctionImportMapping FunctionImportName="VT_GetAllConsigneeWithArea" FunctionName="TruckingVSMModel.Store.VT_GetAllConsigneeWithArea">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetAllConsigneeWithArea_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TaxCode" ColumnName="TaxCode" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="area" ColumnName="area" />
+                <ScalarProperty Name="aid" ColumnName="aid" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetAllFeeByConsignee" FunctionName="TruckingVSMModel.Store.VT_GetAllFeeByConsignee">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetAllFeeByConsignee_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Consignee" ColumnName="Consignee" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="cid" ColumnName="cid" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetCntr20" FunctionName="TruckingVSMModel.Store.VT_GetCntr20" />
+          <FunctionImportMapping FunctionImportName="VT_GetCntr40" FunctionName="TruckingVSMModel.Store.VT_GetCntr40" />
+          <FunctionImportMapping FunctionImportName="VT_GetCntr45" FunctionName="TruckingVSMModel.Store.VT_GetCntr45" />
+          <FunctionImportMapping FunctionImportName="VT_GetCompleteTrip" FunctionName="TruckingVSMModel.Store.VT_GetCompleteTrip">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetCompleteTrip_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CntrNo" ColumnName="CntrNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="Driver" ColumnName="Driver" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CompleteDate" ColumnName="CompleteDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetConsigneeWithArea" FunctionName="TruckingVSMModel.Store.VT_GetConsigneeWithArea">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetConsigneeWithArea_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TaxCode" ColumnName="TaxCode" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="area" ColumnName="area" />
+                <ScalarProperty Name="aid" ColumnName="aid" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetCustomerWithTransaction" FunctionName="TruckingVSMModel.Store.VT_GetCustomerWithTransaction">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetCustomerWithTransaction_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetDetailById" FunctionName="TruckingVSMModel.Store.VT_GetDetailById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetDetailById_Result">
+                <ScalarProperty Name="FeeName" ColumnName="FeeName" />
+                <ScalarProperty Name="FeeAmount" ColumnName="FeeAmount" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="CntrSize" ColumnName="CntrSize" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetFeeByConsignee" FunctionName="TruckingVSMModel.Store.VT_GetFeeByConsignee">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetFeeByConsignee_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Consignee" ColumnName="Consignee" />
+                <ScalarProperty Name="cid" ColumnName="cid" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetLiftingFee" FunctionName="TruckingVSMModel.Store.VT_GetLiftingFee" />
+          <FunctionImportMapping FunctionImportName="VT_GetNoteByName" FunctionName="TruckingVSMModel.Store.VT_GetNoteByName" />
+          <FunctionImportMapping FunctionImportName="VT_GetRevenueByCustomer" FunctionName="TruckingVSMModel.Store.VT_GetRevenueByCustomer" />
+          <FunctionImportMapping FunctionImportName="VT_GetSMSInfo" FunctionName="TruckingVSMModel.Store.VT_GetSMSInfo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetSMSInfo_Result">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="bookbill" ColumnName="bookbill" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="CntrSize" ColumnName="CntrSize" />
+                <ScalarProperty Name="PickupYard" ColumnName="PickupYard" />
+                <ScalarProperty Name="transdate" ColumnName="transdate" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="ZaloId" ColumnName="ZaloId" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetTransacstionById" FunctionName="TruckingVSMModel.Store.VT_GetTransacstionById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetTransacstionById_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ConsigneeID" ColumnName="ConsigneeID" />
+                <ScalarProperty Name="Bill" ColumnName="Bill" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="ChangePlan" ColumnName="ChangePlan" />
+                <ScalarProperty Name="PickupYard" ColumnName="PickupYard" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="TransportDate" ColumnName="TransportDate" />
+                <ScalarProperty Name="StuffingWarehouse" ColumnName="StuffingWarehouse" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="Payer" ColumnName="Payer" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+                <ScalarProperty Name="StuffDate" ColumnName="StuffDate" />
+                <ScalarProperty Name="Booking" ColumnName="Booking" />
+                <ScalarProperty Name="ReturnYard" ColumnName="ReturnYard" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetTransaction" FunctionName="TruckingVSMModel.Store.VT_GetTransaction">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetTransaction_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Bill" ColumnName="Bill" />
+                <ScalarProperty Name="Booking" ColumnName="Booking" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetTransactionByDate" FunctionName="TruckingVSMModel.Store.VT_GetTransactionByDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetTransactionByDate_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Bill" ColumnName="Bill" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="yard" ColumnName="yard" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="Payer" ColumnName="Payer" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="cntr20" ColumnName="cntr20" />
+                <ScalarProperty Name="cntr40" ColumnName="cntr40" />
+                <ScalarProperty Name="cntr40dc" ColumnName="cntr40dc" />
+                <ScalarProperty Name="cntr40hc" ColumnName="cntr40hc" />
+                <ScalarProperty Name="cntr45" ColumnName="cntr45" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetTransactionDetailById" FunctionName="TruckingVSMModel.Store.VT_GetTransactionDetailById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetTransactionDetailById_Result">
+                <ScalarProperty Name="FeeName" ColumnName="FeeName" />
+                <ScalarProperty Name="FeeAmount" ColumnName="FeeAmount" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="CntrSize" ColumnName="CntrSize" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetTransportOrder" FunctionName="TruckingVSMModel.Store.VT_GetTransportOrder" />
+          <FunctionImportMapping FunctionImportName="VT_GetTripByDate" FunctionName="TruckingVSMModel.Store.VT_GetTripByDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetTripByDate_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CntrNo" ColumnName="CntrNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="PickupYard" ColumnName="PickupYard" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Driver" ColumnName="Driver" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="stuffwh" ColumnName="stuffwh" />
+                <ScalarProperty Name="stuffdate" ColumnName="stuffdate" />
+                <ScalarProperty Name="CompleteDate" ColumnName="CompleteDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="doc" ColumnName="doc" />
+                <ScalarProperty Name="CntrSize" ColumnName="CntrSize" />
+                <ScalarProperty Name="TripNote" ColumnName="TripNote" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="SendSMS" ColumnName="SendSMS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetTripOrder" FunctionName="TruckingVSMModel.Store.VT_GetTripOrder">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetTripOrder_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CntrNo" ColumnName="CntrNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Driver" ColumnName="Driver" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CompleteDate" ColumnName="CompleteDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetTruck" FunctionName="TruckingVSMModel.Store.VT_GetTruck">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetTruck_Result">
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="OwnRent" ColumnName="OwnRent" />
+                <ScalarProperty Name="Transit" ColumnName="Transit" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Driver" ColumnName="Driver" />
+                <ScalarProperty Name="TrailerNo" ColumnName="TrailerNo" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="TrailerDate" ColumnName="TrailerDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_RemainOrder" FunctionName="TruckingVSMModel.Store.VT_RemainOrder" />
+          <FunctionImportMapping FunctionImportName="VT_RemoveDetail" FunctionName="TruckingVSMModel.Store.VT_RemoveDetail" />
+          <FunctionImportMapping FunctionImportName="VT_ReportAllRevenue" FunctionName="TruckingVSMModel.Store.VT_ReportAllRevenue" />
+          <FunctionImportMapping FunctionImportName="VT_ResetTotalPrice" FunctionName="TruckingVSMModel.Store.VT_ResetTotalPrice" />
+          <FunctionImportMapping FunctionImportName="VT_RevenueByCustomer" FunctionName="TruckingVSMModel.Store.VT_RevenueByCustomer">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_RevenueByCustomer_Result">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="doc" ColumnName="doc" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="CntrNo" ColumnName="CntrNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CntrSize" ColumnName="CntrSize" />
+                <ScalarProperty Name="FeeAmount" ColumnName="FeeAmount" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="TransID" ColumnName="TransID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_RevenueByMonth" FunctionName="TruckingVSMModel.Store.VT_RevenueByMonth">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_RevenueByMonth_Result">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Booking" ColumnName="Booking" />
+                <ScalarProperty Name="FeeName" ColumnName="FeeName" />
+                <ScalarProperty Name="FeeAmount" ColumnName="FeeAmount" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_TransportOrderN" FunctionName="TruckingVSMModel.Store.VT_TransportOrderN" />
+          <FunctionImportMapping FunctionImportName="VT_TransportOrderNN" FunctionName="TruckingVSMModel.Store.VT_TransportOrderNN" />
+          <FunctionImportMapping FunctionImportName="VT_TransportOrderNX" FunctionName="TruckingVSMModel.Store.VT_TransportOrderNX" />
+          <FunctionImportMapping FunctionImportName="VT_TransportOrderX" FunctionName="TruckingVSMModel.Store.VT_TransportOrderX" />
+          <FunctionImportMapping FunctionImportName="VT_TripByDriver" FunctionName="TruckingVSMModel.Store.VT_TripByDriver">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_TripByDriver_Result">
+                <ScalarProperty Name="CntrNo" ColumnName="CntrNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="OwnRent" ColumnName="OwnRent" />
+                <ScalarProperty Name="Driver" ColumnName="Driver" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CompleteDate" ColumnName="CompleteDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetTransacstionById1" FunctionName="TruckingVSMModel.Store.VT_GetTransacstionById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetTransacstionById_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ConsigneeID" ColumnName="ConsigneeID" />
+                <ScalarProperty Name="Bill" ColumnName="Bill" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="ChangePlan" ColumnName="ChangePlan" />
+                <ScalarProperty Name="PickupYard" ColumnName="PickupYard" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="TransportDate" ColumnName="TransportDate" />
+                <ScalarProperty Name="StuffingWarehouse" ColumnName="StuffingWarehouse" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="Payer" ColumnName="Payer" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+                <ScalarProperty Name="StuffDate" ColumnName="StuffDate" />
+                <ScalarProperty Name="Booking" ColumnName="Booking" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_DailyPlan" FunctionName="TruckingVSMModel.Store.VT_DailyPlan">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_DailyPlan_Result">
+                <ScalarProperty Name="TransportDate" ColumnName="TransportDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="laddress" ColumnName="laddress" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="cntr20" ColumnName="cntr20" />
+                <ScalarProperty Name="cntr40dc" ColumnName="cntr40dc" />
+                <ScalarProperty Name="cntr40hc" ColumnName="cntr40hc" />
+                <ScalarProperty Name="cntr45" ColumnName="cntr45" />
+                <ScalarProperty Name="doc" ColumnName="doc" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="bainang" ColumnName="bainang" />
+                <ScalarProperty Name="baiha" ColumnName="baiha" />
+                <ScalarProperty Name="Payer" ColumnName="Payer" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="driver" ColumnName="driver" />
+                <ScalarProperty Name="TripNote" ColumnName="TripNote" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_DailyPlan1" FunctionName="TruckingVSMModel.Store.VT_DailyPlan">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_DailyPlan_Result">
+                <ScalarProperty Name="TransportDate" ColumnName="TransportDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="laddress" ColumnName="laddress" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="cntr20" ColumnName="cntr20" />
+                <ScalarProperty Name="cntr40dc" ColumnName="cntr40dc" />
+                <ScalarProperty Name="cntr40hc" ColumnName="cntr40hc" />
+                <ScalarProperty Name="cntr45" ColumnName="cntr45" />
+                <ScalarProperty Name="doc" ColumnName="doc" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="bainang" ColumnName="bainang" />
+                <ScalarProperty Name="baiha" ColumnName="baiha" />
+                <ScalarProperty Name="Payer" ColumnName="Payer" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="driver" ColumnName="driver" />
+                <ScalarProperty Name="TripNote" ColumnName="TripNote" />
+                <ScalarProperty Name="CntrNo" ColumnName="CntrNo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetTripByDate1" FunctionName="TruckingVSMModel.Store.VT_GetTripByDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetTripByDate_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CntrNo" ColumnName="CntrNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="PickupYard" ColumnName="PickupYard" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Driver" ColumnName="Driver" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="stuffwh" ColumnName="stuffwh" />
+                <ScalarProperty Name="stuffdate" ColumnName="stuffdate" />
+                <ScalarProperty Name="CompleteDate" ColumnName="CompleteDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="doc" ColumnName="doc" />
+                <ScalarProperty Name="CntrSize" ColumnName="CntrSize" />
+                <ScalarProperty Name="TripNote" ColumnName="TripNote" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="SendSMS" ColumnName="SendSMS" />
+                <ScalarProperty Name="ZaloId" ColumnName="ZaloId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetTransacstionById2" FunctionName="TruckingVSMModel.Store.VT_GetTransacstionById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetTransacstionById_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ConsigneeID" ColumnName="ConsigneeID" />
+                <ScalarProperty Name="Bill" ColumnName="Bill" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="ChangePlan" ColumnName="ChangePlan" />
+                <ScalarProperty Name="PickupYard" ColumnName="PickupYard" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="TransportDate" ColumnName="TransportDate" />
+                <ScalarProperty Name="StuffingWarehouse" ColumnName="StuffingWarehouse" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="Payer" ColumnName="Payer" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+                <ScalarProperty Name="StuffDate" ColumnName="StuffDate" />
+                <ScalarProperty Name="Booking" ColumnName="Booking" />
+                <ScalarProperty Name="ReturnYard" ColumnName="ReturnYard" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetTransactionByDate1" FunctionName="TruckingVSMModel.Store.VT_GetTransactionByDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetTransactionByDate_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Bill" ColumnName="Bill" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="yard" ColumnName="yard" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="Payer" ColumnName="Payer" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="cntr20" ColumnName="cntr20" />
+                <ScalarProperty Name="cntr40" ColumnName="cntr40" />
+                <ScalarProperty Name="cntr40dc" ColumnName="cntr40dc" />
+                <ScalarProperty Name="cntr40hc" ColumnName="cntr40hc" />
+                <ScalarProperty Name="cntr45" ColumnName="cntr45" />
+                <ScalarProperty Name="returnyard" ColumnName="returnyard" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetTransacstionById3" FunctionName="TruckingVSMModel.Store.VT_GetTransacstionById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetTransacstionById_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ConsigneeID" ColumnName="ConsigneeID" />
+                <ScalarProperty Name="Bill" ColumnName="Bill" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="ChangePlan" ColumnName="ChangePlan" />
+                <ScalarProperty Name="PickupYard" ColumnName="PickupYard" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="TransportDate" ColumnName="TransportDate" />
+                <ScalarProperty Name="StuffingWarehouse" ColumnName="StuffingWarehouse" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="Payer" ColumnName="Payer" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+                <ScalarProperty Name="StuffDate" ColumnName="StuffDate" />
+                <ScalarProperty Name="Booking" ColumnName="Booking" />
+                <ScalarProperty Name="ReturnYard" ColumnName="ReturnYard" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetTripByDate2" FunctionName="TruckingVSMModel.Store.VT_GetTripByDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetTripByDate_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CntrNo" ColumnName="CntrNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="PickupYard" ColumnName="PickupYard" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Driver" ColumnName="Driver" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="stuffwh" ColumnName="stuffwh" />
+                <ScalarProperty Name="stuffdate" ColumnName="stuffdate" />
+                <ScalarProperty Name="CompleteDate" ColumnName="CompleteDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="doc" ColumnName="doc" />
+                <ScalarProperty Name="CntrSize" ColumnName="CntrSize" />
+                <ScalarProperty Name="TripNote" ColumnName="TripNote" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="SendSMS" ColumnName="SendSMS" />
+                <ScalarProperty Name="ZaloId" ColumnName="ZaloId" />
+                <ScalarProperty Name="ReturnYard" ColumnName="ReturnYard" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetTripByDate3" FunctionName="TruckingVSMModel.Store.VT_GetTripByDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetTripByDate_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CntrNo" ColumnName="CntrNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="PickupYard" ColumnName="PickupYard" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Driver" ColumnName="Driver" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="stuffwh" ColumnName="stuffwh" />
+                <ScalarProperty Name="stuffdate" ColumnName="stuffdate" />
+                <ScalarProperty Name="CompleteDate" ColumnName="CompleteDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="doc" ColumnName="doc" />
+                <ScalarProperty Name="CntrSize" ColumnName="CntrSize" />
+                <ScalarProperty Name="TripNote" ColumnName="TripNote" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="SendSMS" ColumnName="SendSMS" />
+                <ScalarProperty Name="ZaloId" ColumnName="ZaloId" />
+                <ScalarProperty Name="ReturnYard" ColumnName="ReturnYard" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetSMSInfo1" FunctionName="TruckingVSMModel.Store.VT_GetSMSInfo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetSMSInfo_Result">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="bookbill" ColumnName="bookbill" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="CntrSize" ColumnName="CntrSize" />
+                <ScalarProperty Name="PickupYard" ColumnName="PickupYard" />
+                <ScalarProperty Name="transdate" ColumnName="transdate" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="ZaloId" ColumnName="ZaloId" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ReturnYard" ColumnName="ReturnYard" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetSMSInfo2" FunctionName="TruckingVSMModel.Store.VT_GetSMSInfo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetSMSInfo_Result">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="bookbill" ColumnName="bookbill" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="CntrSize" ColumnName="CntrSize" />
+                <ScalarProperty Name="PickupYard" ColumnName="PickupYard" />
+                <ScalarProperty Name="transdate" ColumnName="transdate" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="ZaloId" ColumnName="ZaloId" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ReturnYard" ColumnName="ReturnYard" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="StandardFees">
+            <EntityTypeMapping TypeName="TruckingVSMModel.StandardFee">
+              <MappingFragment StoreEntitySet="StandardFee">
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetFeeByConsignee1" FunctionName="TruckingVSMModel.Store.VT_GetFeeByConsignee">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetFeeByConsignee_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Consignee" ColumnName="Consignee" />
+                <ScalarProperty Name="cid" ColumnName="cid" />
+                <ScalarProperty Name="fid" ColumnName="fid" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_DailyPlan2" FunctionName="TruckingVSMModel.Store.VT_DailyPlan">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_DailyPlan_Result">
+                <ScalarProperty Name="TransportDate" ColumnName="TransportDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="laddress" ColumnName="laddress" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="cntr20" ColumnName="cntr20" />
+                <ScalarProperty Name="cntr40dc" ColumnName="cntr40dc" />
+                <ScalarProperty Name="cntr40hc" ColumnName="cntr40hc" />
+                <ScalarProperty Name="cntr45" ColumnName="cntr45" />
+                <ScalarProperty Name="doc" ColumnName="doc" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="bainang" ColumnName="bainang" />
+                <ScalarProperty Name="baiha" ColumnName="baiha" />
+                <ScalarProperty Name="Payer" ColumnName="Payer" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="driver" ColumnName="driver" />
+                <ScalarProperty Name="TripNote" ColumnName="TripNote" />
+                <ScalarProperty Name="CntrNo" ColumnName="CntrNo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetTransacstionById4" FunctionName="TruckingVSMModel.Store.VT_GetTransacstionById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetTransacstionById_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ConsigneeID" ColumnName="ConsigneeID" />
+                <ScalarProperty Name="Bill" ColumnName="Bill" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="ChangePlan" ColumnName="ChangePlan" />
+                <ScalarProperty Name="PickupYard" ColumnName="PickupYard" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="TransportDate" ColumnName="TransportDate" />
+                <ScalarProperty Name="StuffingWarehouse" ColumnName="StuffingWarehouse" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="Payer" ColumnName="Payer" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+                <ScalarProperty Name="StuffDate" ColumnName="StuffDate" />
+                <ScalarProperty Name="Booking" ColumnName="Booking" />
+                <ScalarProperty Name="ReturnYard" ColumnName="ReturnYard" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetTruckInFo" FunctionName="TruckingVSMModel.Store.VT_GetTruckInFo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetTruckInFo_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="Transit" ColumnName="Transit" />
+                <ScalarProperty Name="Expire" ColumnName="Expire" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TrailerNo" ColumnName="TrailerNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DriverID" ColumnName="DriverID" />
+                <ScalarProperty Name="TrailerID" ColumnName="TrailerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetTruckInFo1" FunctionName="TruckingVSMModel.Store.VT_GetTruckInFo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetTruckInFo_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="Transit" ColumnName="Transit" />
+                <ScalarProperty Name="Expire" ColumnName="Expire" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TrailerNo" ColumnName="TrailerNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DriverID" ColumnName="DriverID" />
+                <ScalarProperty Name="TrailerID" ColumnName="TrailerID" />
+                <ScalarProperty Name="OwnRent" ColumnName="OwnRent" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_DailyPlan3" FunctionName="TruckingVSMModel.Store.VT_DailyPlan">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_DailyPlan_Result">
+                <ScalarProperty Name="TransportDate" ColumnName="TransportDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="laddress" ColumnName="laddress" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="cntr20" ColumnName="cntr20" />
+                <ScalarProperty Name="cntr40dc" ColumnName="cntr40dc" />
+                <ScalarProperty Name="cntr40hc" ColumnName="cntr40hc" />
+                <ScalarProperty Name="cntr45" ColumnName="cntr45" />
+                <ScalarProperty Name="doc" ColumnName="doc" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="bainang" ColumnName="bainang" />
+                <ScalarProperty Name="baiha" ColumnName="baiha" />
+                <ScalarProperty Name="Payer" ColumnName="Payer" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="driver" ColumnName="driver" />
+                <ScalarProperty Name="TripNote" ColumnName="TripNote" />
+                <ScalarProperty Name="CntrNo" ColumnName="CntrNo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetTripOrder1" FunctionName="TruckingVSMModel.Store.VT_GetTripOrder">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetTripOrder_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CntrNo" ColumnName="CntrNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Driver" ColumnName="Driver" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CompleteDate" ColumnName="CompleteDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_DailyPlan4" FunctionName="TruckingVSMModel.Store.VT_DailyPlan">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_DailyPlan_Result">
+                <ScalarProperty Name="TransportDate" ColumnName="TransportDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="laddress" ColumnName="laddress" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="cntr20" ColumnName="cntr20" />
+                <ScalarProperty Name="cntr40dc" ColumnName="cntr40dc" />
+                <ScalarProperty Name="cntr40hc" ColumnName="cntr40hc" />
+                <ScalarProperty Name="cntr45" ColumnName="cntr45" />
+                <ScalarProperty Name="doc" ColumnName="doc" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="bainang" ColumnName="bainang" />
+                <ScalarProperty Name="baiha" ColumnName="baiha" />
+                <ScalarProperty Name="Payer" ColumnName="Payer" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="driver" ColumnName="driver" />
+                <ScalarProperty Name="TripNote" ColumnName="TripNote" />
+                <ScalarProperty Name="CntrNo" ColumnName="CntrNo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetTripByDate4" FunctionName="TruckingVSMModel.Store.VT_GetTripByDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetTripByDate_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CntrNo" ColumnName="CntrNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="PickupYard" ColumnName="PickupYard" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Driver" ColumnName="Driver" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="stuffwh" ColumnName="stuffwh" />
+                <ScalarProperty Name="stuffdate" ColumnName="stuffdate" />
+                <ScalarProperty Name="CompleteDate" ColumnName="CompleteDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="doc" ColumnName="doc" />
+                <ScalarProperty Name="CntrSize" ColumnName="CntrSize" />
+                <ScalarProperty Name="TripNote" ColumnName="TripNote" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="SendSMS" ColumnName="SendSMS" />
+                <ScalarProperty Name="ZaloId" ColumnName="ZaloId" />
+                <ScalarProperty Name="ReturnYard" ColumnName="ReturnYard" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Units">
+            <EntityTypeMapping TypeName="TruckingVSMModel.Unit">
+              <MappingFragment StoreEntitySet="Unit">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,19 @@
+﻿@model TruckingVSM.Models.Unit
+
+@{
+    Layout = null;
+}
+@using (Html.BeginForm("AddOrEdit", "Unit", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    <div class="form-group">
+        <label class="control-label">Tên đơn vị tính</label>
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Ghi chú</label>
+        @Html.EditorFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+}

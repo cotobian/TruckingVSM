@@ -1,0 +1,324 @@
+﻿@model TruckingVSM.Models.VT_GetTransacstionById_Result
+
+@{
+    ViewBag.Title = "Thông tin Kế hoạch";
+}
+
+<h2>Thông tin Kế hoạch</h2>
+<br />
+
+<div class="container">
+    <div class="panel panel-default" style="background-color:transparent">
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6">
+                    <label class="control-label">Tên khách hàng</label>
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-lg-3 col-md-3">
+                    <label class="control-label">Loại hàng</label>
+                    @Html.TextBoxFor(model => model.Type, new { @class = "form-control" }) 
+                </div>
+                <div class="form-group col-lg-3 col-md-3">
+                    <label class="control-label">Mặt hàng</label>
+                    @Html.TextBoxFor(model => model.Commodity, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6">
+                    <label class="control-label">Số Bill/Booking</label>
+                    @Html.TextBoxFor(model => model.Bill, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-lg-6 col-md-6">
+                    <label class="control-label">Yêu cầu khách hàng</label>
+                    @Html.TextBoxFor(model => model.Inquiry, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-3 col-md-3">
+                    <label class="control-label">Ngày vận chuyển</label>
+                    @Html.TextBoxFor(model => model.TransportDate, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-lg-3 col-md-3">
+                    <label class="control-label">Ngày hết hạn/Ngày xuất tàu</label>
+                    @Html.TextBoxFor(model => model.ExpireDate, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-lg-6 col-md-6">
+                    <label class="control-label">Bãi bốc cont/ Bãi hạ rỗng</label>
+                    @Html.TextBoxFor(model => model.PickupYard, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6">
+                    <label class="control-label">Kho đóng/giao hàng</label>
+                    @Html.TextBoxFor(model => model.StuffingWarehouse, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group col-lg-6 col-md-6">
+                <label class="control-label">Hãng tàu</label>
+                @Html.TextBoxFor(model => model.Shipping, new { @class = "form-control" })
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6">
+                    <label class="control-label">Bên thanh toán</label>
+                    @Html.TextBoxFor(model => model.Payer, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-lg-3 col-md-3">
+                    <label class="control-label">Trọng lượng</label>
+                    @Html.TextBoxFor(model => model.Weight, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-lg-3 col-md-3">
+                    <label class="control-label">Người liên hệ</label>
+                    @Html.TextBoxFor(model => model.Caller, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6">
+                    <label class="control-label">Ghi chú</label>
+                    @Html.TextAreaFor(model => model.Note, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-lg-6 col-md-6">
+                    <label class="control-label">Thay đổi kế hoạch</label>
+                    @Html.TextAreaFor(model => model.ChangePlan, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="button" value="Chỉnh sửa" class="btn btn-success" style="margin-right: 20px" id="EditTrans" onclick="PopupForm('/Transaction/AddOrEdit?id=' + @ViewBag.ID)"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2>Chi tiết Giao dịch</h2>
+<br />
+
+<div class="container">
+    <div class="panel panel-default" style="background-color:transparent">
+        <div class="panel-body">
+            <input type="hidden" id="TransactionID" />
+            <input type="hidden" id="LocationID" />
+            <div class="row">
+                <div class="form-group col-sm-6 col-lg-6">
+                    <label class="control-label">Loại phí</label>
+                    <select class="form-control" id="feelist">
+                        <option value=""></option>
+                        @foreach (var fee in ViewBag.odata)
+                        {
+                            <option value=@fee.ShortName>@fee.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-sm-6 col-lg-6">
+                    <label class="control-label">Đơn giá</label>
+                    <input type="number" class="form-control" id="FeeAmount" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6 col-lg-6">
+                    <label class="control-label">Đơn vị</label>
+                    <input type="text" class="form-control" id="CntrSize">
+                </div>
+                <div class="form-group col-sm-6 col-lg-6">
+                    <label class="control-label">Số lượng</label>
+                    <input type="text" class="form-control" id="Quantity" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Địa điểm</label>
+                <input type="text" class="form-control" id="Location" />
+            </div>
+            <div class="form-group">
+                <input type="button" value="Tạo mới" class="btn btn-success" style="margin-right: 20px" id="AddDetail" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2>Danh sách chi phí</h2>
+<br />
+<div class="container">
+    <table id="detailTable" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Loại phí</th>
+                <th>Đơn giá</th>
+                <th>Số lượng</th>
+                <th>Cont Size</th>
+                <th>Số tiền</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+
+@section scripts{
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script>
+        var dataTable;
+        $(document).ready(function () {
+            $("#TransactionID").val(@ViewBag.ID);
+            $("#EditTrans").click(function(){
+
+            });
+            dataTable = $("#detailTable").DataTable({
+                "searching":false,
+                "paging":false,
+                "ajax": {
+                    "url": "/Transaction/GetDetail?id=" + @ViewBag.ID,
+                    "type": "post",
+                    "datatype": "json",
+                },
+                "columns": [
+                    { "data": "FeeName" },
+                    { "data": "FeeAmount" , "render": function(data){
+                        return formatCurrency(data);
+                    }},
+                    { "data": "Quantity" },
+                    { "data": "CntrSize" },
+                    { "data": "Total", "render": function(data){
+                        return formatCurrency(data);
+                    }
+                    },
+                    { "data": "ID","render": function (data) {
+                        return "<a class='btn btn-default btn-sm' onclick=PopupForm('@Url.Action("AddOrEditDetail","Transaction")/" + data + "')><i class='fas fa-pencil-alt' ></i>Edit</a><a class='btn btn-danger btn-sm' style='margin-left:10px' onclick=Delete("+data+")><i class='fa fa-trash'></i>Delete</a>";
+                    },
+                        "orderable": false,
+                        "searchable": false,
+                        "width": "150px"
+                    }
+                ]
+            });
+
+            $("#feelist").change(function () {
+                $.ajax({
+                   url: '@Url.Action("GetPriceByName", "Fee")',
+                   method: 'POST',
+                   datatype: "json",
+                   data: { term: $("#feelist").val(), type: @Model.ConsigneeID },
+                   success: function (data) {
+                       $("#FeeAmount").val(data.data.Price);
+                       $("#CntrSize").val(data.data.Unit);
+                   }
+                })
+            });
+
+            $("#Location").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("GetLocationList", "Transaction")',
+                        method: 'POST',
+                        datatype: "json",
+                        data: { term: $("#Location").val() },
+                        success: function (data) {
+                            response($.map(data, function (val, item) {
+                                return {
+                                    label: val.Name,
+                                    value: val.Name,
+                                    customerId: val.ID
+                                }
+                            }))
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    $("#LocationID").val(ui.item.customerId);
+                }
+            });
+
+            $("#AddDetail").click(function(){
+                $.ajax({
+                    url: '/Transaction/AddDetail',
+                    method: 'POST',
+                    datatype: "json",
+                    data: {
+                        TransactionID: $("#TransactionID").val(),
+                        FeeName: $("#feelist").val(),
+                        FeeAmount: $("#FeeAmount").val(),
+                        CntrSize: $("#CntrSize").val(),
+                        LocationID: $("#LocationID").val(),
+                        Quantity: $("#Quantity").val()
+                    },
+                    success: function (data) {
+                        dataTable.ajax.reload();
+                        $.notify(data.message, {
+                            globalPosition : "top center",
+                            className : "success"
+                        });
+                    }
+                })
+            });
+        });
+
+        function formatCurrency(total) {
+            var formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'VND',
+            });
+            return formatter.format(total);
+        }
+        function PopupForm(url) {
+            var formDiv = $('<div/>');
+            $.get(url)
+            .done(function (response) {
+                formDiv.html(response);
+                Popup = formDiv
+                    .dialog({
+                    autoOpen: true,
+                    resizeable: false,
+                    title: 'Fill Transaction Details',
+                    height: 500,
+                    width: 700,
+                    close: function () {
+                        Popup.dialog('destroy').remove();
+                    }
+                });
+            });
+        }
+
+        function SubmitForm(form) {
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid())
+            {
+                $.ajax({
+                    type: "POST",
+                    url: form.action,
+                    data: $(form).serialize(),
+                    success: function (data) {
+                        if (data.success) {
+                            Popup.dialog('close');
+                            location.reload();
+                            $.notify(data.message, {
+                                globalPosition : "top center",
+                                className : "success"
+                            })
+                        }
+                    }
+                });
+            }
+            return false;
+        }
+
+        function Delete(id) {
+            if (confirm("Are you sure to delete this Detail?"))
+            {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("DeleteDetail", "Transaction")/' + id,
+                    success: function (data) {
+                        if(data.success)
+                        {
+                            dataTable.ajax.reload();
+                            $.notify(data.message, {
+                                globalPosition: "top center",
+                                className: "success"
+                            })
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+}

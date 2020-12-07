@@ -1,0 +1,27 @@
+﻿@model TruckingVSM.Models.StandardFee
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddOrEdit", "StdFee", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.ID)
+    <div class="form-group">
+        <label class="control-label">Biểu cước</label>
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Name)
+    </div>
+    <div class="form-group">
+        <label class="control-label">Mã biểu cước</label>
+        @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Đơn vị tính</label>
+        @Html.EditorFor(model => model.Unit, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+        <input type="reset" value="Reset" class="btn" />
+    </div>
+}

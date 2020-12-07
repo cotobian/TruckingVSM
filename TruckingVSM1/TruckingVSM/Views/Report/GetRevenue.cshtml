@@ -1,0 +1,180 @@
+﻿
+@{
+    ViewBag.Title = "Báo cáo Doanh thu";
+}
+
+<h2>Báo cáo Doanh thu Vận chuyển theo khách hàng</h2>
+<br />
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group col-lg-3 col-md-3">
+                    <label class="control-label">Ngày bắt đầu</label>
+                    <input placeholder="" type="text" id="datepicker1" class="form-control datepicker">
+                </div>
+                <div class="form-group col-lg-3 col-md-3">
+                    <label class="control-label">Ngày kết thúc</label>
+                    <input placeholder="" type="text" id="datepicker2" class="form-control datepicker">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6">
+                    <label class="control-label">Khách hàng</label>
+                    <input type="text" class="form-control" id="cusname" />
+                    <input type="hidden" id="cusid" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-3 col-md-3">
+                    <button class="btn btn-success" id="indiReport">Tạo báo cáo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2>Báo cáo Doanh thu theo khách hàng</h2>
+<br />
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group col-lg-3 col-md-3">
+                    <label class="control-label">Ngày bắt đầu</label>
+                    <input placeholder="" type="text" id="datepicker5" class="form-control datepicker">
+                </div>
+                <div class="form-group col-lg-3 col-md-3">
+                    <label class="control-label">Ngày kết thúc</label>
+                    <input placeholder="" type="text" id="datepicker6" class="form-control datepicker">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6">
+                    <label class="control-label">Khách hàng</label>
+                    <input type="text" class="form-control" id="cusname1" />
+                    <input type="hidden" id="cusid1" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-3 col-md-3">
+                    <button class="btn btn-success" id="alltrfReport">Tạo báo cáo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2>Báo cáo Tổng Doanh thu</h2>
+<br />
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group col-lg-3 col-md-3">
+                    <label class="control-label">Ngày bắt đầu</label>
+                    <input placeholder="" type="text" id="datepicker3" class="form-control datepicker">
+                </div>
+                <div class="form-group col-lg-3 col-md-3">
+                    <label class="control-label">Ngày kết thúc</label>
+                    <input placeholder="" type="text" id="datepicker4" class="form-control datepicker">
+                </div>
+                <div class="form-group col-lg-3 col-md-3">
+                    <label class="control-label">Khu vực</label>
+                    <select class="form-control" id="arealist">
+                        <option value=""></option>
+                        @foreach (var area in ViewBag.data)
+                        {
+                            <option value=@area.ID>@area.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-3 col-md-3">
+                    <button class="btn btn-success" id="allReport">Tạo báo cáo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+@section scripts{
+    <script>
+        $('.datepicker').datepicker();
+        $(document).ready(function () {
+            $("#cusname").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("GetCustomerList", "Transaction")',
+                        method: 'POST',
+                        datatype: "json",
+                        data: { term: $("#cusname").val() },
+                        success: function (data) {
+                            response($.map(data, function (val, item) {
+                                return {
+                                    label: val.Name,
+                                    value: val.Name,
+                                    customerId: val.ID
+                                }
+                            }))
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    $("#cusid").val(ui.item.customerId);
+                    $('#cusname').val(ui.item.label);
+                }
+            });
+            $("#cusname1").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("GetCustomerList", "Transaction")',
+                        method: 'POST',
+                        datatype: "json",
+                        data: { term: $("#cusname1").val() },
+                        success: function (data) {
+                            response($.map(data, function (val, item) {
+                                return {
+                                    label: val.Name,
+                                    value: val.Name,
+                                    customerId: val.ID
+                                }
+                            }))
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    $("#cusid1").val(ui.item.customerId);
+                    $('#cusname1').val(ui.item.label);
+                }
+            });
+            $('#indiReport').click(function () {
+                var cusname = $('#cusname').val();
+                var cusid = $("#cusid").val();
+                var start = $("#datepicker1").val();
+                var end = $("#datepicker2").val();
+                window.location.href = '/Report/RevenueByCustomer?CustomerName=' + cusname + '&CustomerId=' + cusid + '&Start=' + start + '&End=' + end;
+            });
+
+            $('#alltrfReport').click(function () {
+                var cusname = $('#cusname1').val();
+                var cusid = $("#cusid1").val();
+                var start = $("#datepicker5").val();
+                var end = $("#datepicker6").val();
+                window.location.href = '/Report/RevenueByMonth?CustomerName=' + cusname + '&CustomerId=' + cusid + '&Start=' + start + '&End=' + end;
+            });
+
+            $('#allReport').click(function () {
+                var start = $("#datepicker3").val();
+                var end = $("#datepicker4").val();
+                var area = $("#arealist").val();
+                window.location.href = '/Report/AllTariffByMonth?&Start=' + start + '&End=' + end + '&Area=' + area;
+            });
+        })
+
+    </script>        
+}

@@ -1,0 +1,156 @@
+﻿@model TruckingVSM.Models.TransactionDetail
+@{
+    ViewBag.Title = "Detail";
+}
+<h2>Tạo chi tiết giao dịch </h2>
+<br />
+<div class="container">
+    <div class="panel panel-default" style="background-color:transparent">
+        <div class="panel-body">
+            <input type="hidden" id="total" />
+            <div class="row">
+                <div class="form-group col-sm-6 col-lg-6">
+                    <label class="control-label">Loại phí</label>
+                    <select id="FeeName" class="form-control">
+                        @foreach (var fee in ViewBag.data)
+                        {
+                            <option value=@fee.ShortName>@fee.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-sm-6 col-lg-6">
+                    <label class="control-label">Đơn giá</label>
+                    <input class="form-control" id="FeeAmount" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6 col-lg-6">
+                    <label class="control-label">Đơn vị</label>
+                    <select class="form-control" id="CntrSize">
+                        <option value=""></option>
+                        <option value="20">Cont 20</option>
+                        <option value="40">Cont 40</option>
+                        <option value="45">Cont 45</option>
+                        <option value="Bo">Bộ</option>
+                        <option value="Lan">Lần</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-6 col-lg-6">
+                    <label class="control-label">Số lượng</label>
+                    <input class="form-control" id="Quantity" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Địa điểm</label>
+                <input class="form-control" id="Location" disabled />
+            </div>
+            <div class="form-group">
+                <input type="button" value="Tạo mới" id="AddNewbtn" class="btn btn-success" style="margin-right: 20px" />
+                <input type="reset" value="Reset" class="btn" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <a class="btn btn-success" style="margin-bottom:10px;" onclick="PopupForm('@Url.Action("AddOrEdit","Driver")')"><i class="fa fa-plus"></i> Thêm mới</a>
+    <table id="driverTable" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Tên tài xế</th>
+                <th>Số điện thoại</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+@section scripts{
+    <script>
+        var Popup, dataTable;
+        $(document).ready(function () {
+            dataTable = $("#driverTable").DataTable({
+                "columns": [
+                    { "data": "Name" },
+                    { "data": "Phone" },
+                    {
+                        "data": "ID", "render": function (data) {
+                            return "<a class='btn btn-danger btn-sm' style='margin-left:10px' onclick=Delete("+data+")><i class='fa fa-trash'></i>Delete</a>";
+                        },
+                        "orderable": false,
+                        "searchable": false,
+                        "width": "150px"
+                    }
+                ],
+            });
+
+            $("#FeeName").change(function () {
+                $.ajax({
+                    url: '@Url.Action("GetPriceByName", "Fee")',
+                    method: 'POST',
+                    datatype: "json",
+                    data: { term: $("#feelist").val() },
+                    success: function (data) {
+                        $("#FeeAmount").val(data.data);
+                    }
+                })
+            });
+
+           $("#AddNewbtn").click(function () {
+               $.ajax({
+                   url: '@Url.Action("AddDetail", "Transaction")',
+                   method: 'POST',
+                   datatype: "json",
+                   data: {
+                       TransactionID: @ViewBag.ID,
+                       FeeName: $("#FeeName").val(),
+                       FeeAmount: $("#FeeAmount").val(),
+                       Quantity: $("#Quantity").val(),
+                       CntrSize: $("#CntrSize").val()
+                   },
+                   success: function (data) {
+                       dataTable.ajax.reload();
+                       $.notify(data.message, {
+                           globalPosition : "top center",
+                           className : "success"
+                       });
+                   }
+               })
+           });
+
+           $("#typelist").change(function () {
+               if ($("#typelist").val() == "Import") {
+                   $("#booktext").prop("disabled", true);
+                   $("#billtext").prop("disabled", false);
+               }
+               if ($("#typelist").val() == "Export") {
+                   $("#billtext").prop("disabled", true);
+                   $("#booktext").prop("disabled", false);
+               }
+               if ($("#typelist").val() == "") {
+                   $("#billtext").prop("disabled", false);
+                   $("#booktext").prop("disabled", false);
+               }
+           });
+           $("#CustomerName").autocomplete({
+               source: function (request, response) {
+                   $.ajax({
+                       url: '@Url.Action("GetCustomerList", "Transaction")',
+                       method: 'POST',
+                       datatype: "json",
+                       data: { term: $("#CustomerName").val() },
+                       success: function (data) {
+                           response($.map(data, function (val, item) {
+                               return {
+                                   label: val.Name,
+                                   value: val.Name,
+                                   customerId: val.ID
+                               }
+                           }))
+                       }
+                   });
+               }
+           });
+       })
+    </script>
+}

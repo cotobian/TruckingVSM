@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<button id="login">Log in</button>
+<br />
+<button id="keepSession">Keep Session</button>
+<br />
+<button id="sendSMS">Send SMS</button>
+<br />
+<button id="deleteSMS">Delete SMS</button>
+<br />
+<button id="logout">Log out</button>
+<br />
+<label id="sessiontxt"></label>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#sendSMS").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("sendSMSThrough", "SMS")/',
+                    success: function (data) {
+                        if (data.success) {
+                            $("#sessiontxt").text(data.message);
+                            dataTable.ajax.reload();
+                            $.notify(data.message, {
+                                globalPosition: "top center",
+                                className: "success"
+                            })
+                        }
+                    }
+                });
+            });
+
+            $("#deleteSMS").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("deleteSMSThrough", "SMS")/',
+                    success: function (data) {
+                        if (data.success) {
+                            $("#sessiontxt").text(data.message);
+                            dataTable.ajax.reload();
+                            $.notify(data.message, {
+                                globalPosition: "top center",
+                                className: "success"
+                            })
+                        }
+                    }
+                });
+            });
+        })
+    </script>    
+}

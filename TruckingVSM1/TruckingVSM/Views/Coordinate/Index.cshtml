@@ -1,0 +1,222 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý Điều vận";
+}
+
+<h2>Quản lý Lệnh Điều vận</h2>
+<style>
+    div.dataTables_wrapper {
+        width: 1600px;
+        margin: 0 auto;
+    }
+    .Flipped, .Flipped .Content
+    {
+        transform:rotateX(180deg);
+        -ms-transform:rotateX(180deg); /* IE 9 */
+        -webkit-transform:rotateX(180deg); /* Safari and Chrome */
+    }
+    body{
+       
+    }
+    .dataTables_filter {
+        text-align: left !important;
+    }
+</style>
+<br />
+<div class="row">
+    <div class="form-group col-lg-3 col-md-3">
+        <label class="control-label">Ngày bắt đầu</label>
+        <input placeholder="" type="text" id="datepicker1" class="form-control datepicker">
+    </div>
+    <div class="form-group col-lg-3 col-md-3">
+        <label class="control-label">Ngày kết thúc</label>
+        <input placeholder="" type="text" id="datepicker2" class="form-control datepicker">
+    </div>
+    <div class="form-group col-lg-3 col-md-3">
+        <br />
+        <button class="btn btn-success" id="search">Tìm kiếm</button>
+    </div>
+</div>
+<br />
+    <div id="scroll1" style="width:100%;" >
+        <div class="container Content">
+            <table id="userTable" class="table table-striped table-bordered sticky-header" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>Khách hàng</th>
+
+                        <th>Thay đổi kế hoạch</th>
+                        <th>Loại Hàng</th>
+                        <th>Mặt Hàng</th>
+                        <th>Book/Bill</th>
+                        <th>Loại Cont</th>
+                        <th>Hãng Tàu</th>
+                        <th>Số Cont</th>
+
+                        <th>Số xe</th>
+                        <th>Tài xế</th>
+                        <th>Bốc cont/Hạ rỗng</th>
+                        <th>Kho đóng/giao hàng</th>
+                        <th>Ngày vận chuyển</th>
+                        <th>Ngày hoàn tất</th>
+                        <th>Trạng thái</th>
+                        <th>Note Điều vận</th>
+                        <th>Tin Zalo</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    @section scripts{
+        <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+        <script>
+        var Popup, dataTable;
+        $('.datepicker').datepicker();
+        $(document).ready(function () {
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0');
+            var yyyy = today.getFullYear();
+            today = mm + '/' + dd + '/' + yyyy;
+            dataTable = $("#userTable").DataTable({
+                "scrollX": true,
+                "ajax": {
+                    "url": "/Coordinate/GetTripByDate?Start=" + today + "&End=" + today,
+                    "type": "GET",
+                    "datatype": "json",
+                },
+                "columns": [
+                    { "data": "Name" },
+                    
+                    { "data": "Note" },
+                    { "data": "Type" },
+                    { "data": "Commodity" },
+                    { "data": "doc" },
+                    { "data": "CntrSize" },
+                    { "data": "Shipping" },
+                    { "data": "CntrNo" },
+                    
+                    { "data": "TruckNo" },
+                    { "data": "Driver" },
+                    { "data": "PickupYard" },
+                    { "data": "stuffwh" },
+                    { "data": "CreateDate" },
+                    { "data": "CompleteDate" },
+                    { "data": "Status" },
+                    { "data": "TripNote", "width": "300px" },
+                    { "data": "SendSMS" ,"render":function(data){
+                        if(data == null) return "";
+                        else if(data=="0") return "chưa gửi";
+                        else return "đã gửi";
+                    }
+                    },
+                    {
+                        "data": "ID", "render": function (data) {
+                            if(@ViewBag.perm == 4 || @ViewBag.perm == 1)
+                            {
+                                return "<a class='btn btn-default btn-sm' onclick=PopupForm('@Url.Action("AddOrEdit","Coordinate")/" + data +
+                                    "')><i class='fas fa-pencil-alt' ></i>Edit</a><a class='btn btn-danger btn-sm' style='margin-left:10px' onclick=Delete("
+                                    + data + ")><i class='fa fa-trash'></i>Delete</a><a class='btn btn-primary' onclick=sendSMS(" + data +")><i class='fas fa-comments'></i> Zalo</a>";
+                            }
+                            else return "";
+                    },
+                        "orderable": false,
+                        "searchable": false,
+                        "width": "200px" },
+                ]
+            });
+            $("#userTable").scroll(function(){
+                $("thead").attr("position","fixed");
+            });
+
+            $("#search").click(function () {
+                var start = $("#datepicker1").val();
+                var end = $("#datepicker2").val();
+                dataTable.ajax.url("/Coordinate/GetTripByDate?Start=" + start + "&End=" + end).load();
+            });
+        });
+
+        function sendSMS(id)
+        {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SendById", "SMS")/' + id,
+                success: function (data) {
+                    if(data.success)
+                    {
+                        dataTable.ajax.reload();
+                        $.notify(data.message, {
+                            globalPosition: "top center",
+                            className: "success"
+                        })
+                    }
+                }
+            });
+        }
+
+        function Delete(id) {
+            if (confirm("Are you sure to delete this Trip?"))
+            {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Delete", "Coordinate")/' + id,
+                    success: function (data) {
+                        if(data.success)
+                        {
+                            dataTable.ajax.reload();
+                            $.notify(data.message, {
+                                globalPosition: "top center",
+                                className: "success"
+                            })
+                        }
+                    }
+                });
+            }
+        }
+
+        function PopupForm(url) {
+            var formDiv = $('<div/>');
+            $.get(url)
+            .done(function (response) {
+                formDiv.html(response);
+                Popup = formDiv.dialog({
+                    autoOpen: true,
+                    resizeable: false,
+                    title: 'Fill Trip Details',
+                    height: 500,
+                    width: 700,
+                    close: function () {
+                        Popup.dialog('destroy').remove();
+                    }
+                });
+            });
+        }
+
+        function SubmitForm(form) {
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                $.ajax({
+                    type: "POST",
+                    url: form.action,
+                    data: $(form).serialize(),
+                    success: function (data) {
+                        if (data.success) {
+                            Popup.dialog('close');
+                            dataTable.ajax.reload();
+                            $.notify(data.message, {
+                                globalPosition: "top center",
+                                className: "success"
+                            })
+                        }
+                    }
+                });
+            }
+            return false;
+        }
+        </script>
+    }

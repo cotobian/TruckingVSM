@@ -1,0 +1,10 @@
+﻿Time: 07/12/2020 08:54:18 AM
+-----------------------------------------------------------
+Message: String was not recognized as a valid DateTime.
+StackTrace:    at System.DateTimeParse.ParseExact(String s, String format, DateTimeFormatInfo dtfi, DateTimeStyles style)
+   at System.DateTime.ParseExact(String s, String format, IFormatProvider provider)
+   at TruckingVSM.Controllers.CoordinateController.AddOrEdit(VT_GetTripOrder_Result result) in C:\Users\DELL\Desktop\Project\TruckingVSM\TruckingVSM\Controllers\CoordinateController.cs:line 81
+Source: mscorlib
+TargetSite: System.DateTime ParseExact(System.String, System.String, System.Globalization.DateTimeFormatInfo, System.Globalization.DateTimeStyles)
+-----------------------------------------------------------
+

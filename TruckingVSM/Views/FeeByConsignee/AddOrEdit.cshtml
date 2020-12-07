@@ -1,0 +1,88 @@
+﻿@model TruckingVSM.Models.VT_GetFeeByConsignee_Result
+@{
+    Layout = null;
+}
+@using (Html.BeginForm("AddOrEdit", "FeeByConsignee", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.cid, new { @id = "cid" })
+    @Html.HiddenFor(model => model.Name, new { @id = "Name" })
+<div class="form-group">
+    <label class="control-label">Tên Khách hàng</label>
+    @Html.EditorFor(model => model.Consignee, new { htmlAttributes = new { @class = "form-control", @id = "consignee" } })
+</div>
+<div class="form-group">
+    <label class="control-label">Biểu cước</label>
+    <select class="form-control" name="fid" id="fid">
+        <option value=""></option>
+        @foreach (var fee in ViewBag.Fee)
+        {
+            if (fee.ID == Model.fid)
+            {
+                <option value="@fee.ID" selected="selected">@fee.Name</option>
+            }
+            else
+            {
+                <option value="@fee.ID">@fee.Name</option>
+            }
+        }
+    </select>
+    @Html.ValidationMessageFor(model => model.Name)
+</div>
+<div class="form-group">
+    <label class="control-label">Tên viết tắt</label>
+    @Html.EditorFor(model => model.ShortName, new { htmlAttributes = new { @class = "form-control", @id = "code" } })
+</div>
+<div class="form-group">
+    <label class="control-label">Đơn giá</label>
+    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+</div>
+<div class="form-group">
+    <label class="control-label">Đơn vị</label>
+    @Html.EditorFor(model => model.Unit, new { htmlAttributes = new { @class = "form-control", @id = "unit" } })
+</div>
+<div class="form-group">
+    <input type="submit" value="Submit" class="btn btn-primary" />
+    <input type="reset" value="Reset" class="btn" />
+</div>
+}
+<script>
+    $('#Name').change(function () {
+        $("#fid").val();
+    });
+    $('#fid').change(function () {
+        $.ajax({
+            url: '@Url.Action("GetStdFeeInfo", "StandardFee")',
+            method: 'POST',
+            datatype: "json",
+            data: { id: $("#fid").val() },
+            success: function (data) {
+                $("#code").val(data.Code);
+                $("#unit").val(data.Unit);
+                $('#Name').val(data.Name);
+            }
+        })
+    });
+    $("#consignee").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '@Url.Action("GetCusByName", "Index")',
+                method: 'POST',
+                datatype: "json",
+                data: { term: $("#consignee").val() },
+                success: function (data) {
+                    response($.map(data, function (val, item) {
+                        return {
+                            label: val.Name,
+                            value: val.Name,
+                            customerId: val.ID
+                        }
+                    }))
+                }
+            })
+        },
+        select: function (event, ui) {
+            $("#cid").val(ui.item.customerId);
+        }
+    });
+</script>

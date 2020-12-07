@@ -1,0 +1,370 @@
+﻿@{
+    ViewBag.Title = "Tạo Kế hoạch mới";
+}
+<h2>Thông tin Kế hoạch</h2>
+<br />
+<div class="container">
+    <div class="panel panel-default" style="background-color:transparent">
+        <div class="panel-body">
+            <input type="hidden" id="ConsigneeID" />
+            <div class="row">
+                <div class="form-group col-sm-6 col-lg-6">
+                    <label class="control-label">Tên khách hàng</label>
+                    <input class="form-control" id="CustomerName" />
+                </div>
+                <div class="form-group col-sm-3 col-lg-3">
+                    <label class="control-label">Loại hàng</label>
+                    <select class="form-control" id="typelist">
+                        <option value=""></option>
+                        @foreach (var fee in ViewBag.odata)
+                        {
+                            <option value="@fee.Name">@fee.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-sm-3 col-lg-3">
+                    <label class="control-label">Mặt hàng</label>
+                    <input class="form-control" id="Commodity" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6 col-lg-6">
+                    <label class="control-label">Số Bill/Booking</label>
+                    <input type="text" class="form-control" id="billtext" />
+                </div>
+                <div class="form-group col-sm-6 col-lg-6">
+                    <label class="control-label">Yêu cầu khách hàng</label>
+                    <input type="text" class="form-control" id="Inquiry" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-3 col-lg-3">
+                    <label class="control-label">Ngày vận chuyển</label>
+                    <input type="text" class="form-control" id="transporttxt" />
+                </div>
+                <div class="form-group col-sm-3 col-lg-3">
+                    <label class="control-label">Ngày tàu chạy/ hết hạn lưu bãi</label>
+                    <input type="text" class="form-control" id="expdatetxt" />
+                </div>
+                <div class="form-group col-sm-3 col-lg-3">
+                    <label class="control-label">Bãi bốc cont</label>
+                    <input type="text" class="form-control" id="yardtxt" />
+                </div>
+                <div class="form-group col-sm-3 col-lg-3">
+                    <label class="control-label">Bãi hạ cont</label>
+                    <input type="text" class="form-control" id="returntxt" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6 col-lg-6">
+                    <label class="control-label">Kho đóng/giao hàng</label>
+                    <input type="text" class="form-control" id="stuffwhtxt" />
+                </div>
+                <div class="form-group col-sm-6 col-lg-6">
+                    <label class="control-label">Hãng tàu</label>
+                    <select class="form-control" id="shippingtxt">
+                        <option value=""></option>
+                        @foreach (var fee in ViewBag.sdata)
+                        {
+                            <option value="@fee.ShortName">@fee.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6 col-lg-6">
+                    <label class="control-label">Bên thanh toán</label>
+                    <input type="text" class="form-control" id="payer" />
+                </div>
+                <div class="form-group col-sm-3 col-lg-3">
+                    <label class="control-label">Trọng lượng</label>
+                    <input type="text" class="form-control" id="weight" />
+                </div>
+                <div class="form-group col-sm-3 col-lg-3">
+                    <label class="control-label">Người liên hệ</label>
+                    <input type="text" class="form-control" id="caller" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6 col-lg-6">
+                    <label class="control-label">Ghi chú</label>
+                    <textarea class="form-control" id="notetext"></textarea>
+                </div>
+                <div class="form-group col-sm-6 col-lg-6">
+                    <label class="control-label">Thay đổi kế hoạch</label>
+                    <textarea class="form-control" id="plantext"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="button" value="Tạo mới" class="btn btn-success" style="margin-right: 20px" id="AddTransaction" />
+            </div>
+        </div>
+    </div>
+</div>
+<h2>Chi tiết Kế hoạch</h2>
+<br />
+<div class="container">
+    <div class="panel panel-default" style="background-color:transparent">
+        <div class="panel-heading">
+            Tạo kế hoạch
+        </div>
+        <div class="panel-body">
+            <br />
+            <div class="row">
+                <div class="form-group col-sm-3 col-md-3">
+                    <label class="control-label">Cont 20</label>
+                    <input type="number" class="form-control" id="20fast" min="0"/>
+                </div>
+                <div class="form-group col-sm-3 col-md-3">
+                    <label class="control-label">Cont 40 DC</label>
+                    <input type="number" class="form-control" id="40dcfast" min="0"/>
+                </div>
+                <div class="form-group col-md-3 col-sm-3">
+                    <label class="control-label">Cont 40 HC</label>
+                    <input type="number" class="form-control" id="40hcfast" min="0"/>
+                </div>
+                <div class="form-group col-md-3 col-sm-3">
+                    <label class="control-label">Cont 45</label>
+                    <input type="number" class="form-control" id="45fast" min="0"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Địa điểm</label>
+                <input type="text" class="form-control" id="locf" />
+            </div>
+            <button class="btn btn-success" id="btnf" value="">Tạo lệnh</button>
+        </div>
+    </div>
+    <input type="hidden" id="TransactionID" />
+    <input type="hidden" id="LocationID" />
+</div>
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    <script>
+       var dataTable;
+       function formatCurrency(total) {
+           var formatter = new Intl.NumberFormat('en-US', {
+               style: 'currency',
+               currency: 'VND',
+           });
+           return formatter.format(total);
+       }
+
+       $(document).ready(function () {
+           $("#expdatetxt").datepicker({ dateFormat: 'dd/mm/yy' });
+           $("#transporttxt").datetimepicker({
+               format: 'd/m/Y H:i'
+           });
+           $("#btnf").click(function () {
+               $.ajax({
+                   url: '/Transaction/AddDetailFast',
+                   method: 'POST',
+                   datatype: "json",
+                   data: {
+                       ConsigneeID: $("#ConsigneeID").val(),
+                       Cntr20: $("#20fast").val(),
+                       Cntr40DC: $("#40dcfast").val(),
+                       Cntr40HC: $("#40hcfast").val(),
+                       Cntr45: $("#45fast").val(),
+                       HangLe: $("#hanglefast").val(),
+                       LocationID: $("#LocationID").val(),
+                       TransactionID: $("#TransactionID").val()
+                   },
+                   success: function (data) {
+                       $.notify(data.message, {
+                           globalPosition: "top center",
+                           className: "success"
+                       });
+                   }
+               })
+           });
+
+           $("#feelist").change(function () {
+               $.ajax({
+                   url: '@Url.Action("GetPriceByName", "Fee")',
+                   method: 'POST',
+                   datatype: "json",
+                   data: { term: $("#feelist").val(), type: $("#ConsigneeID").val() },
+                   success: function (data) {
+                       $("#FeeAmount").val(data.data.Price);
+                       $("#CntrSize").val(data.data.Unit);
+                   }
+               })
+           });
+
+
+           $("#typelist").change(function () {
+               if ($("#typelist").val() == "Import") {
+                   $("#booktext").prop("disabled", true);
+                   $("#billtext").prop("disabled", false);
+               }
+               if ($("#typelist").val() == "Export") {
+                   $("#billtext").prop("disabled", true);
+                   $("#booktext").prop("disabled", false);
+               }
+               if ($("#typelist").val() == "") {
+                   $("#billtext").prop("disabled", false);
+                   $("#booktext").prop("disabled", false);
+               }
+           });
+
+           $("#CustomerName").autocomplete({
+               source: function (request, response) {
+                   $.ajax({
+                       url: '@Url.Action("GetCustomerList", "Transaction")',
+                       method: 'POST',
+                       datatype: "json",
+                       data: { term: $("#CustomerName").val() },
+                       success: function (data) {
+                           response($.map(data, function (val, item) {
+                               return {
+                                   label: val.Name,
+                                   value: val.Name,
+                                   customerId: val.ID
+                               }
+                           }))
+                       }
+                   })
+               },
+               select: function (event, ui) {
+                   $("#ConsigneeID").val(ui.item.customerId);
+               }
+           });
+
+           $("#locf").autocomplete({
+               source: function (request, response) {
+                   $.ajax({
+                       url: '@Url.Action("GetLocationList", "Transaction")',
+                       method: 'POST',
+                       datatype: "json",
+                       data: { term: $("#locf").val() },
+                       success: function (data) {
+                           response($.map(data, function (val, item) {
+                               return {
+                                   label: val.Name,
+                                   value: val.Name,
+                                   customerId: val.ID
+                               }
+                           }))
+                       }
+                   })
+               },
+               select: function (event, ui) {
+                   $("#LocationID").val(ui.item.customerId);
+               }
+           });
+
+           $("#Location").autocomplete({
+               source: function (request, response) {
+                   $.ajax({
+                       url: '@Url.Action("GetLocationList", "Transaction")',
+                       method: 'POST',
+                       datatype: "json",
+                       data: { term: $("#Location").val() },
+                       success: function (data) {
+                           response($.map(data, function (val, item) {
+                               return {
+                                   label: val.Name,
+                                   value: val.Name,
+                                   customerId: val.ID
+                               }
+                           }))
+                       }
+                   })
+               },
+               select: function (event, ui) {
+                   $("#LocationID").val(ui.item.customerId);
+               }
+           });
+
+           $("#AddTransaction").click(function () {
+               $.ajax({
+                   url: '/Transaction/checkBookExist',
+                   method: 'POST',
+                   datatype: 'json',
+                   data: {
+                       bkno: $("#booktext").val(),
+                       blno: $("#billtext").val()
+                   },
+                   success: function (data) {
+                       var create = 1;
+                       if (data == "1") {
+                           if(confirm("Book/bill này đã tồn tại. Bạn có muốn tạo lại không?") == false)
+                           {
+                               create = 0;
+                           }
+                       }
+                       if(create == 1)
+                       {
+                           var type1 = encodeURI($("#typelist").val());
+                           $.ajax({
+                               url: '/Transaction/AddNew',
+                               method: 'POST',
+                               datatype: "json",
+                               data: {
+                                   Type: type1,
+                                   Booking: $("#booktext").val(),
+                                   Bill: $("#billtext").val(),
+                                   Note: $("#notetext").val(),
+                                   StuffDate: $("#stufftimetxt").val(),
+                                   StuffWH: $("#stuffwhtxt").val(),
+                                   TransportDate: $("#transporttxt").val(),
+                                   ConsigneeID: $("#ConsigneeID").val(),
+                                   ExpireDate: $("#expdatetxt").val(),
+                                   Shipping: $("#shippingtxt").val(),
+                                   ChangePlan: $("#plantext").val(),
+                                   PickupYard: $("#yardtxt").val(),
+                                   ReturnYard: $("#returntxt").val(),
+                                   Weight: $("#weight").val(),
+                                   Payer: $("#payer").val(),
+                                   Caller: $("#caller").val(),
+                                   Inquiry: $("#Inquiry").val(),
+                                   Commodity: $("#Commodity").val()
+                               },
+                               success: function (data) {
+                                   $.notify("Thêm kế hoạch thành công!", {
+                                       globalPosition: "top center",
+                                       className: "success"
+                                   });
+                                   $("#TransactionID").val(data.tranid);
+                                   $.each(data.price, function (index) {
+                                       $('#feelist')
+                                          .append($('<option>', { value: data.price[index].ShortName })
+                                          .text(data.price[index].Name));
+                                   });
+                               }
+                           })
+                       }
+                   }
+               })
+           });
+
+           $("#AddDetail").click(function () {
+               var size = encodeURI($("#CntrSize").val());
+               $.ajax({
+                   url: '/Transaction/AddDetail',
+                   method: 'POST',
+                   datatype: "json",
+                   data: {
+                       TransactionID: $("#TransactionID").val(),
+                       FeeName: $("#feelist").val(),
+                       FeeAmount: $("#FeeAmount").val(),
+                       CntrSize: size,
+                       LocationID: $("#LocationID").val(),
+                       Quantity: $("#Quantity").val()
+                   },
+                   success: function (data) {
+                       $.notify("Thêm chi tiết thành công!", {
+                           globalPosition: "top center",
+                           className: "success"
+                       });
+                   }
+               })
+           });
+       })
+    </script>
+}

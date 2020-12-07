@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Báo cáo Tổng hợp";
+}
+<h2>Báo cáo Số chuyến theo lái xe</h2>
+<br />
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <input type="hidden" id="driverid" />
+                <div class="form-group col-lg-3 col-md-3">
+                    <label class="control-label">Ngày bắt đầu</label>
+                    <input placeholder="" type="text" id="datepicker1" class="form-control datepicker">
+                </div>
+                <div class="form-group col-lg-3 col-md-3">
+                    <label class="control-label">Ngày kết thúc</label>
+                    <input placeholder="" type="text" id="datepicker2" class="form-control datepicker">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-3 col-md-3">
+                    <button class="btn btn-success" id="indiReport">Tạo báo cáo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+@section scripts{
+    <script>
+        $('.datepicker').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#indiReport').click(function () {
+            var start = $("#datepicker1").val();
+            var end = $("#datepicker2").val();
+            window.location.href = '/Report/TripByDriver?&Start=' + start + '&End=' + end;
+        });
+    </script>
+}

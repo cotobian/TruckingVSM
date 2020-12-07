@@ -1,0 +1,318 @@
+﻿@model List<string>
+@{
+    ViewBag.Title = "Điều vận";
+}
+
+<h2>Điều vận</h2>
+<br />
+
+<div class="container">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-lg-4 col-md-4">
+                <label class="control-label" id="20cntr">Số lệnh cont 20: @ViewBag.cntr20</label> 
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <label class="control-label" id="40cntr">Số lệnh cont 40: @ViewBag.cntr40</label> 
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <label class="control-label" id="45cntr">Số lệnh cont 45: @ViewBag.cntr45</label> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <label class="control-label">Ghi chú lệnh 1</label>
+                <textarea class="form-control" id="notearea1"></textarea>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <label class="control-label">Ghi chú lệnh 2</label>
+                <textarea class="form-control" id="notearea2"></textarea>
+            </div>
+        </div>
+    </div>
+<br />
+    <div class="col-lg-4 col-md-4">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <b><i>Hàng Xuất</i></b>
+                    </div>
+                    <div class="panel-body" style="padding:0;border:0px;height:200px;overflow-y:auto">
+                        <ul class="list-group">
+                            @if (ViewBag.orderx != null)
+                            {
+                                foreach (var item in ViewBag.orderx)
+                                {
+                                    <li class="list-group-item">@item</li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <b><i>Hàng Nội địa Xuất</i></b>
+                    </div>
+                    <div class="panel-body" style="padding:0;border:0px;height:200px;overflow-y:auto">
+                        <ul class="list-group">
+                            @if (ViewBag.ordernx != null)
+                            {
+                                foreach (var item in ViewBag.ordernx)
+                                {
+                                    <li class="list-group-item">@item</li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <b><i>Hàng Nhập</i></b>
+                    </div>
+                    <div class="panel-body" style="padding:0;border:0px;height:200px;overflow-y:auto">
+                        <ul class="list-group">
+                            @if (ViewBag.ordern != null)
+                            {
+                                foreach (var item in ViewBag.ordern)
+                                {
+                                    <li class="list-group-item">@item</li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <b><i>Hàng Nội địa Nhập</i></b>
+                    </div>
+                    <div class="panel-body" style="padding:0;border:0px;height:200px;overflow-y:auto">
+                        <ul class="list-group">
+                            @if (ViewBag.ordernn != null)
+                            {
+                                foreach (var item in ViewBag.ordernn)
+                                {
+                                    <li class="list-group-item">@item</li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4">
+        <div class="panel panel-default" >
+            <div class="panel-heading">
+                <b><i>Thông tin chuyến</i></b>
+            </div>
+            <div class="panel-body" style="height: 500px;">
+                <div class="form-group">
+                    <input type="hidden" id="truckind" value="false" />
+                    <label class="control-label">Chọn loại xe</label><br />
+                    <input type="checkbox" id="xethue"> Xe thuê	&nbsp;	&nbsp;	&nbsp;	&nbsp;	&nbsp;	&nbsp;	&nbsp;	&nbsp;
+                    <input type="checkbox" id="xenha"> Xe nhà<br>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" id="truckid" />
+                    <label class="control-label">Số xe</label>
+                    <input class="form-control" id="trucktxt" />
+                </div>
+                <div class="form-group">
+                    <input type="hidden" id="driverid" />
+                    <label class="control-label">Tài xế</label>
+                    <input class="form-control" id="drivertxt" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Số lệnh 1</label>
+                    <input class="form-control" id="order1text" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Số lệnh 2</label>
+                    <input class="form-control" id="order2text" disabled />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Ghi chú</label>
+                    <input class="form-control" id="notetxt" />
+                </div>
+                <input type="button" value="Tạo chuyến" class="btn btn-success" id="addtrip" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $('.datepicker').datepicker();
+        $(document).ready(function () {
+            var content = '';
+
+            $(".list-group-item").draggable({
+                helper: 'clone',
+                stack: "ul",
+                cursor: "move",
+                scroll: true,
+                appendTo: "body",
+                zIndex:10000,
+                containment: 'document',
+                start: function () {
+                    content = $(this).html();
+                }
+            });
+            $("#xethue").change(function () {
+                if (this.checked)
+                {
+                    $("#truckind").val("true");
+                    $("#xenha").prop("checked", false);
+                }
+            });
+            $("#xenha").change(function () {
+                if (this.checked) {
+                    $("#truckind").val("false");
+                    $("#xethue").prop("checked", false);
+                }
+            });
+            $("#search").click(function () {
+                var start = $("#datepicker1").val();
+                var end = $("#datepicker2").val();
+                window.location.href = "/Coordinate/CreateNew?Start=" + start + "&End=" + end;
+            });
+
+            $("#order1text").droppable({
+                activeClass: "ui-state-hover",
+                hoverClass: "ui-state-active",
+                accept: ".list-group-item",
+                drop: function (event, ui) {
+                    $("#order1text").val(content);
+                    $(ui.helper).remove(); //destroy clone
+                    $(ui.draggable).remove(); //remove from list
+                    $("#order2text").prop("disabled", false);
+                    $("#cntr2txt").prop("disabled", false);
+                    $.ajax({
+                        url: '@Url.Action("GetNoteByName", "Transaction")',
+                        method: 'POST',
+                        datatype: "json",
+                        data: { term: $("#order1text").val() },
+                        success: function (data) {
+                            $("#notearea1").val(data.data);
+                        }
+                    });
+                }
+            });
+
+            $("#order2text").droppable({
+                activeClass: "ui-state-hover",
+                hoverClass: "ui-state-active",
+                accept: ".list-group-item",
+                drop: function (event, ui) {
+                    $("#order2text").val(content);
+                    $(ui.helper).remove(); //destroy clone
+                    $(ui.draggable).remove(); //remove from list
+                    $.ajax({
+                        url: '@Url.Action("GetNoteByName", "Transaction")',
+                        method: 'POST',
+                        datatype: "json",
+                        data: { term: $("#order2text").val() },
+                        success: function (data) {
+                            $("#notearea2").val(data.data);
+                        }
+                    });
+                }
+            });
+        });
+
+        //autocomplete ten tai xe
+        $("#drivertxt").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("GetDriverByName", "Driver")',
+                    method: 'POST',
+                    datatype: "json",
+                    data: { term: $("#drivertxt").val() },
+                    success: function (data) {
+                        response($.map(data, function (val, item) {
+                            return {
+                                label: val.Name,
+                                value: val.Name,
+                                customerId: val.ID
+                            }
+                        }))
+                    }
+                })
+            },
+            select: function (event, ui) {
+                $("#driverid").val(ui.item.customerId);
+                $("#drivertxt").val(ui.item.label);
+            }
+        });
+
+        $("#trucktxt").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("GetTruckByName", "Truck")',
+                    method: 'POST',
+                    datatype: "json",
+                    data: { term: $("#trucktxt").val(),kind: $("#truckind").val()},
+                    success: function (data) {
+                        response($.map(data, function (val, item) {
+                            return {
+                                label: val.Name,
+                                value: val.Name,
+                                customerId: val.ID
+                            }
+                        }))
+                    }
+                })
+            },
+            select: function (event, ui) {
+                $("#truckid").val(ui.item.customerId);
+                $.ajax({
+                    url: '@Url.Action("GetDriverByTruck", "Truck")',
+                    method: 'POST',
+                    datatype: "json",
+                    data: { term: ui.item.value },
+                    success: function (data) {
+                        console.log(data);
+                        $("#drivertxt").val(data.Name);
+                        $("#driverid").val(data.ID);
+                    }
+                });
+            }
+        });
+
+        $("#addtrip").click(function () {
+            $.ajax({
+                url: '/Coordinate/AddTrip',
+                method: 'POST',
+                datatype: "json",
+                data: {
+                    TruckId: $("#truckid").val(),
+                    DriverId: $("#driverid").val(),
+                    Order1: $("#order1text").val(),
+                    Order2: $("#order2text").val(),
+                    Status: $("#statustext").val(),
+                    Note: $("#notetxt").val()
+                },
+                success: function (data) {
+                    location.reload();
+                    $.notify(data.message, {
+                        globalPosition: "top center",
+                        className: "success"
+                    });
+                }
+            })
+        });
+    </script>
+}

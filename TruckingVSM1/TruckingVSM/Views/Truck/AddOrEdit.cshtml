@@ -1,0 +1,106 @@
+﻿@model TruckingVSM.Models.Truck
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddOrEdit", "Truck", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.TrailerID, new { @id = "trailerid" })
+    @Html.HiddenFor(model => model.DriverID, new { @id = "driverid" })
+    <div class="form-group">
+        <label class="control-label">Số Xe</label>
+        @Html.EditorFor(model => model.TruckNo, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.TruckNo)
+    </div>
+    <div class="form-group">
+        <label class="control-label">Trạng thái</label>
+        @Html.DropDownListFor(model => model.Status,
+                  new List<SelectListItem> {
+                       new SelectListItem { Value = "Busy" , Text = "Bận" },
+                       new SelectListItem { Value = "Available" , Text = "Rảnh" }
+                    },
+                  new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Tài xế</label>
+        <input class="form-control" id="drivertxt" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Rơ mooc</label>
+        <input class="form-control" id="trailertxt" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Hạn lưu hành</label>
+        @Html.EditorFor(model => model.Expire, new { htmlAttributes = new { @class = "form-control", @id = "expedt" } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Transit</label>
+        @Html.EditorFor(model => model.Transit, new { htmlAttributes = new { @class = "form-control", @id = "tranedt" } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Xe nhà / Xe Thuê</label>
+        @Html.DropDownListFor(model => model.OwnRent,
+                  new List<SelectListItem> {
+                      new SelectListItem { Value = "" , Text = "" },
+                       new SelectListItem { Value = "false" , Text = "Xe Nhà" },
+                       new SelectListItem { Value = "true" , Text = "Xe Thuê" },
+                    },
+                  new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+        <input type="reset" value="Reset" class="btn" />
+    </div>
+}
+
+<script>
+    $("#expedt").datepicker({ dateFormat: 'dd/mm/yy' });
+    $("#tranedt").datepicker({ dateFormat: 'dd/mm/yy' });
+    $("#drivertxt").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '@Url.Action("GetDriverByName", "Driver")',
+                method: 'POST',
+                datatype: "json",
+                data: { term: $("#drivertxt").val() },
+                success: function (data) {
+                    response($.map(data, function (val, item) {
+                        return {
+                            label: val.Name,
+                            value: val.Name,
+                            customerId: val.ID
+                        }
+                    }))
+                }
+            })
+        },
+        select: function (event, ui) {
+            $("#driverid").val(ui.item.customerId);
+        }
+    });
+
+    $("#trailertxt").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '@Url.Action("GetTrailerByName", "Trailer")',
+                method: 'POST',
+                datatype: "json",
+                data: { term: $("#trailertxt").val() },
+                success: function (data) {
+                    response($.map(data, function (val, item) {
+                        return {
+                            label: val.Name,
+                            value: val.Name,
+                            customerId: val.ID
+                        }
+                    }))
+                }
+            })
+        },
+        select: function (event, ui) {
+            $("#trailerid").val(ui.item.customerId);
+        }
+    });
+</script>

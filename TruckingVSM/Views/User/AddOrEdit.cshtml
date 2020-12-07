@@ -1,0 +1,38 @@
+﻿@model TruckingVSM.Models.User
+@{
+    Layout = null;
+}
+@using (Html.BeginForm("AddOrEdit", "User", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.ID)
+    <div class="form-group">
+        @Html.LabelFor(model => model.Username, new { @class = "control-label" })
+        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, new { @class = "control-label" })
+        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, new { @class = "control-label" })
+        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Tên đầy đủ</label>
+        @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Phân quyền</label>
+        @Html.DropDownListFor(model => model.RolesID, new List<SelectListItem>
+       {
+            new SelectListItem { Text = "Admin", Value = "1", Selected=true},
+            new SelectListItem { Text = "Điều Vận", Value = "4"},
+            new SelectListItem { Text = "Kinh Doanh", Value = "5"},
+            new SelectListItem { Text = "Bãi", Value = "6"}
+       }, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+        <input type="reset" value="Reset" class="btn" />
+    </div>
+}

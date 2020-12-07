@@ -1,0 +1,161 @@
+﻿@model TruckingVSM.Models.Transaction
+@{
+    ViewBag.Title = "Quản trị giao dịch";
+}
+
+<h2>Quản lý Kế hoạch</h2>
+<style>
+    div.dataTables_wrapper {
+        width: 1900px;
+        margin: 0 auto;
+    }
+    .dataTables_filter {
+        text-align: left !important;
+    }
+    body{
+        
+    }
+</style>
+<br />
+<div class="row">
+    <div class="form-group col-lg-3 col-md-3">
+        <label class="control-label">Ngày bắt đầu</label>
+        <input placeholder="" type="text" id="datepicker1" class="form-control datepicker">
+    </div>
+    <div class="form-group col-lg-3 col-md-3">
+        <label class="control-label">Ngày kết thúc</label>
+        <input placeholder="" type="text" id="datepicker2" class="form-control datepicker">
+    </div>
+    <div class="form-group col-lg-3 col-md-3">
+        <br />
+        <button class="btn btn-success" id="search">Tìm kiếm</button>
+    </div>
+</div>
+<br />
+<div id="scroll1" style="width:100%;">
+    <div class="container">
+        <table id="userTable" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Ghi chú</th>
+                    <th>Loại hàng</th>
+                    <th>Tên khách hàng</th>
+                    <th>Số chứng từ</th>
+                    <th>Cont 20</th>
+                    <th>Cont 40 DC</th>
+                    <th>Cont 40 HC</th>
+                    <th>Cont 45</th>
+                    <th>Mặt hàng</th>
+                    <th>Yêu cầu khách hàng</th>
+                    <th>Trọng lượng</th>
+                    <th>Bên thanh toán</th>
+                    <th>Người liên hệ</th>
+                    <th>Bãi bốc/hạ cont</th>
+                    <th>Ngày Vận chuyển</th>
+                    <th>Hết hạn/Xuất tàu</th>
+                    <th>Tổng tiền</th>
+                    <th>Hãng tàu</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    @section scripts{
+        <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+        <script>
+            var Popup, dataTable;
+            $('.datepicker').datepicker();
+
+            $(document).ready(function () {
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, '0');
+                var mm = String(today.getMonth() + 1).padStart(2, '0');
+                var yyyy = today.getFullYear();
+                today = mm + '/' + dd + '/' + yyyy;
+                dataTable = $("#userTable").DataTable({
+                    "scrollX": true,
+                    "ajax": {
+                        "url": "/Transaction/GetTransactionByDate?Start=" + today + "&End=" + today,
+                        "type": "GET",
+                        "datatype": "json",
+                    },
+                    "columns": [
+                        { "data": "Note" , "width": "300px"},
+                        { "data": "Type" },
+                        { "data": "Name" },
+                        { "data": "Bill" },
+                        { "data": "cntr20" },
+                        { "data": "cntr40dc" },
+                        { "data": "cntr40hc" },
+                        { "data": "cntr45" },
+                        { "data": "Commodity" },
+                        { "data": "Inquiry" , "width": "300px"},
+                        { "data": "Weight" },
+                        { "data": "Payer" },
+                        { "data": "Caller" },
+                        { "data": "yard" },
+                        { "data": "DateTime" },
+                        { "data": "ExpireDate" },
+                        {
+                            "data": "Total", "render": function (data) {
+                                return formatCurrency(data);
+                            }
+                        },
+                        { "data": "Shipping" },
+                        {
+                            "data": "ID", "render": function (data) {
+                                if(@ViewBag.perm == 5 || @ViewBag.perm == 1)
+                                {
+                                    return "<a class='btn btn-default btn-sm' href='/Transaction/Edit?id=" + data + "')><i class='fas fa-pencil-alt' ></i>Edit</a><a class='btn btn-danger btn-sm' style='margin-left:10px' onclick=Delete(" + data + ")><i class='fa fa-trash'></i>Delete</a>";
+                                }
+                                else return "";
+                            },
+                            "orderable": false,
+                            "searchable": false,
+                            "width": "150px"
+                        }
+                    ],
+                });
+
+                $("#search").click(function () {
+                    var start = $("#datepicker1").val();
+                    var end = $("#datepicker2").val();
+                    dataTable.ajax.url("/Transaction/GetTransactionByDate?Start=" + start + "&End=" + end).load();
+                });
+            });
+
+            function formatCurrency(total) {
+                var formatter = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'VND',
+                });
+                return formatter.format(total);
+            }
+
+            function Delete(id) {
+                if (confirm("Are you sure to delete this Transaction?"))
+                {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("DeleteTransaction", "Transaction")/' + id,
+                        success: function (data) {
+                            if(data.success)
+                            {
+                                dataTable.ajax.reload();
+                                $.notify(data.message, {
+                                    globalPosition: "top center",
+                                    className: "success"
+                                })
+                            }
+                        }
+                    });
+                }
+            }
+        </script>
+    }
+

@@ -1,0 +1,140 @@
+﻿
+@{
+    ViewBag.Title = "Kế hoạch hàng ngày";
+}
+
+<h2>Kế hoạch hàng ngày</h2>
+<br />
+
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group col-lg-3 col-md-3">
+                    <label class="control-label">Ngày bắt đầu</label>
+                    <input placeholder="" type="text" id="start" class="form-control datepicker">
+                </div>
+                <div class="form-group col-lg-3 col-md-3">
+                    <label class="control-label">Ngày kết thúc</label>
+                    <input placeholder="" type="text" id="end" class="form-control datepicker">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-3 col-md-3">
+                    <button class="btn btn-success" id="btnReport">Tạo báo cáo</button>
+                </div>
+                <div class="form-group col-lg-3 col-md-3">
+                    <button class="btn btn-success" id="btnDownload">Download Excel</button>
+                </div>
+            </div>
+            <div style="overflow-x:auto;width:100%;">
+                <div class="container">
+                    <table id="userTable" class="table table-striped table-bordered" style="width:1000px">
+                        <thead>
+                            <tr>
+                                <th>Ngày thực hiện</th>
+                                <th>Chủ hàng</th>
+                                <th>Địa chỉ đóng/trả hàng</th>
+                                <th>Người liên hệ</th>
+                                <th>Yêu cầu chủ hàng</th>
+                                <th>Cont 20</th>
+                                <th>Cont 40 DC</th>
+                                <th>Cont 40 HC</th>
+                                <th>Khác</th>
+                                <th>Booking/Bill</th>
+                                <th>Hãng tàu</th>
+                                <th>Loại hàng</th>
+                                <th>Loại hoạt động</th>
+                                <th>Ngày hết hạn</th>
+                                <th>Bãi nâng</th>
+                                <th>Bãi hạ</th>
+                                <th>Bên thanh toán</th>
+                                <th>Số xe</th>
+                                <th>Số cont</th>
+                                <th>Trọng lượng</th>
+                                <th>Nhà thầu vận chuyển</th>
+                                <th>Ghi chú</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script>
+        //khoi tao tham so
+        var Popup, dataTable;
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        //ngay thang dinh dang dd/mm/yyyy
+        today = dd + '/' + mm + '/' + yyyy;
+        $('.datepicker').datepicker({ dateFormat: 'dd/mm/yy' });
+        $(document).ready(function () {
+            var start = $("#start").val();
+            var end = $("#end").val();
+            //ham kiem tra ngay chon
+            function notify() {
+                $.notify("Ngày xuất báo cáo không thể trống!", {
+                    globalPosition: "top center",
+                    color: "#fff", background: "#D44950"
+                })
+            }
+            $('#btnDownload').click(function () {
+                if ($("#datepicker").val() == "" || $("#end").val() == "")
+                {
+                    notify();
+                    return;
+                }
+                window.location.href = "/Report/DailyReport?&startd=" + $("#start").val() + "&endd=" + $("#end").val();
+            });
+            $('#btnReport').click(function () {
+                if ($("#start").val() == "" || $("#end").val() == "") {
+                    notify();
+                    return;
+                }
+                dataTable.ajax.url("/Report/DailyReportGrid?&startd=" + $("#start").val() + "&endd=" + $("#end").val()).load();
+            });
+            
+            dataTable = $("#userTable").DataTable({
+                "scrollX": true,
+                "ajax": {
+                    "url": "/Report/DailyReportGrid?&startd=" + today + "&endd=" + today,
+                    "type": "POST",
+                    "datatype": "json",
+                },
+                "columns": [
+                        { "data": "TransportDate" },
+                        { "data": "Name" },
+                        { "data": "laddress" },
+                        { "data": "Caller" },
+                        { "data": "Inquiry", "width": "250px" },
+                        { "data": "cntr20" },
+                        { "data": "cntr40dc" },
+                        { "data": "cntr40hc" },
+                        { "data": "cntr45" },
+                        { "data": "doc" },
+                        { "data": "Shipping" },
+                        { "data": "Commodity" },
+                        { "data": "Type" },
+                        { "data": "ExpireDate" },
+                        { "data": "bainang" },
+                        { "data": "baiha" },
+                        { "data": "Payer" },
+                        { "data": "TruckNo" },
+                        { "data": "CntrNo" },
+                        { "data": "Weight" },
+                        { "data": "driver" },
+                        { "data": "TripNote", "width": "250px" }
+                    ],
+            });
+        })
+    </script>
+}
