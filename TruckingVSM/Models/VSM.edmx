@@ -1000,6 +1000,10 @@
             <Parameter Name="end" Mode="In" Type="DateTime" />
           </FunctionImport>
           <EntitySet Name="Units" EntityType="TruckingVSMModel.Unit" />
+          <FunctionImport Name="VT_DailyPlan5" ReturnType="Collection(TruckingVSMModel.VT_DailyPlan_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="VT_AuthenticateUser_Result">
           <Property Type="String" Name="FullName" Nullable="true" MaxLength="50" />
@@ -1274,6 +1278,7 @@
           <Property Type="String" Name="driver" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="TripNote" Nullable="true" MaxLength="500" />
           <Property Type="String" Name="CntrNo" Nullable="true" MaxLength="13" />
+          <Property Type="Int32" Name="nightstore" Nullable="true" />
         </ComplexType>
         <EntityType Name="StandardFee">
           <Key>
@@ -2399,6 +2404,35 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="VT_DailyPlan5" FunctionName="TruckingVSMModel.Store.VT_DailyPlan">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_DailyPlan_Result">
+                <ScalarProperty Name="TransportDate" ColumnName="TransportDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="laddress" ColumnName="laddress" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="cntr20" ColumnName="cntr20" />
+                <ScalarProperty Name="cntr40dc" ColumnName="cntr40dc" />
+                <ScalarProperty Name="cntr40hc" ColumnName="cntr40hc" />
+                <ScalarProperty Name="cntr45" ColumnName="cntr45" />
+                <ScalarProperty Name="doc" ColumnName="doc" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="bainang" ColumnName="bainang" />
+                <ScalarProperty Name="baiha" ColumnName="baiha" />
+                <ScalarProperty Name="Payer" ColumnName="Payer" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="driver" ColumnName="driver" />
+                <ScalarProperty Name="TripNote" ColumnName="TripNote" />
+                <ScalarProperty Name="CntrNo" ColumnName="CntrNo" />
+                <ScalarProperty Name="nightstore" ColumnName="nightstore" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

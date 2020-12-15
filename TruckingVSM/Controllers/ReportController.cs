@@ -59,7 +59,7 @@ namespace TruckingVSM.Controllers
             foreach(var item in list)
             {
                 Sheet.Cells[string.Format("A{0}", row)].Value = row - 3;
-                Sheet.Cells[string.Format("B{0}", row)].Value = startd;
+                Sheet.Cells[string.Format("B{0}", row)].Value = item.TransportDate;
                 Sheet.Cells[string.Format("C{0}", row)].Value = item.Name;
                 Sheet.Cells[string.Format("D{0}", row)].Value = item.laddress;
                 Sheet.Cells[string.Format("E{0}", row)].Value = item.Caller;
@@ -80,6 +80,7 @@ namespace TruckingVSM.Controllers
                 Sheet.Cells[string.Format("T{0}", row)].Value = item.CntrNo;
                 Sheet.Cells[string.Format("U{0}", row)].Value = item.Weight;
                 Sheet.Cells[string.Format("V{0}", row)].Value = item.driver;
+                Sheet.Cells[string.Format("W{0}", row)].Value = item.nightstore.ToString();
                 row++;
             }
             Response.Clear();
