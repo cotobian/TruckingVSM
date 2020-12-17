@@ -14,6 +14,7 @@
                 <th>Tên viết tắt</th>
                 <th>Mã số thuế</th>
                 <th>Khu vực</th>
+                <th>Giờ gửi điều chỉnh</th>
                 <th></th>
             </tr>
         </thead>
@@ -39,6 +40,7 @@
                     { "data": "ShortName" },
                     { "data": "TaxCode" },
                     { "data": "area" },
+                    { "data": "UpdateEmailTime", "width": "80px" },
                     {
                         "data": "ID", "render": function (data) {
                             return "<a class='btn btn-info btn-sm' onclick=PopupForm('@Url.Action("AddOrEditConsignee","Index")/" + data + "')><i class='fas fa-pencil-alt' ></i>Edit</a><a class='btn btn-danger btn-sm' style='margin-left:10px' onclick=Delete("+data+")><i class='fa fa-trash'></i>Delete</a>";

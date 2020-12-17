@@ -24,6 +24,7 @@
           <Property Name="update_time" Type="datetime" />
           <Property Name="AreaID" Type="int" />
           <Property Name="ShortName" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateEmailTime" Type="time" Precision="7" />
         </EntityType>
         <EntityType Name="Driver">
           <Key>
@@ -144,15 +145,15 @@
           <Property Name="Shipping" Type="nvarchar" MaxLength="50" />
           <Property Name="ChangePlan" Type="nvarchar(max)" />
           <Property Name="TransportDate" Type="datetime" />
-          <Property Name="PickupYard" Type="nvarchar" MaxLength="50" />
-          <Property Name="ReturnYard" Type="nvarchar" MaxLength="50" />
+          <Property Name="PickupYard" Type="nvarchar" MaxLength="500" />
+          <Property Name="ReturnYard" Type="nvarchar" MaxLength="500" />
           <Property Name="StuffingWarehouse" Type="nvarchar" MaxLength="50" />
           <Property Name="StuffDate" Type="nvarchar" MaxLength="50" />
-          <Property Name="Commodity" Type="nvarchar" MaxLength="100" />
+          <Property Name="Commodity" Type="nvarchar" MaxLength="500" />
           <Property Name="Inquiry" Type="nvarchar(max)" />
-          <Property Name="Payer" Type="nvarchar" MaxLength="100" />
+          <Property Name="Payer" Type="nvarchar(max)" />
           <Property Name="Weight" Type="nvarchar" MaxLength="50" />
-          <Property Name="Caller" Type="nvarchar" MaxLength="50" />
+          <Property Name="Caller" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="TransactionDetail">
           <Key>
@@ -253,6 +254,7 @@
           <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="RolesID" Type="int" />
           <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmailPass" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <Association Name="FK_FeeByConsignee_Consignee">
           <End Role="Consignee" Type="Self.Consignee" Multiplicity="0..1" />
@@ -484,6 +486,7 @@
           <Property Name="ShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="FeeByConsignees" Relationship="Self.FK_FeeByConsignee_Consignee" FromRole="Consignee" ToRole="FeeByConsignee" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK_Transaction_Consignee" FromRole="Consignee" ToRole="Transaction" />
+          <Property Name="UpdateEmailTime" Type="Time" Precision="7" />
         </EntityType>
         <EntityType Name="Driver">
           <Key>
@@ -596,17 +599,17 @@
           <Property Name="Shipping" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ChangePlan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TransportDate" Type="DateTime" Precision="3" />
-          <Property Name="PickupYard" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PickupYard" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="StuffingWarehouse" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StuffDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Commodity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Commodity" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Inquiry" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Payer" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Payer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Weight" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Caller" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Caller" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Consignee" Relationship="Self.FK_Transaction_Consignee" FromRole="Transaction" ToRole="Consignee" />
           <NavigationProperty Name="TransactionDetails" Relationship="Self.FK_TransactionDetail_Transaction" FromRole="Transaction" ToRole="TransactionDetail" />
-          <Property Name="ReturnYard" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReturnYard" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TransactionDetail">
           <Key>
@@ -700,6 +703,7 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="RolesID" Type="Int32" />
           <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmailPass" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_FeeByConsignee_Consignee">
           <End Role="Consignee" Type="Self.Consignee" Multiplicity="0..1" />
@@ -1000,6 +1004,18 @@
             <Parameter Name="end" Mode="In" Type="DateTime" />
           </FunctionImport>
           <EntitySet Name="Units" EntityType="TruckingVSMModel.Unit" />
+          <FunctionImport Name="VT_GetAllConsigneeWithArea1" ReturnType="Collection(TruckingVSMModel.VT_GetAllConsigneeWithArea_Result)" />
+          <FunctionImport Name="VT_GetAllConsigneeWithArea2" ReturnType="Collection(TruckingVSMModel.VT_GetAllConsigneeWithArea_Result)" />
+          <FunctionImport Name="VT_GetConsigneeWithArea1" ReturnType="Collection(TruckingVSMModel.VT_GetConsigneeWithArea_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VT_DailyPlan5" ReturnType="Collection(TruckingVSMModel.VT_DailyPlan_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="VT_GetSMSInfo3" ReturnType="Collection(TruckingVSMModel.VT_GetSMSInfo_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="VT_AuthenticateUser_Result">
           <Property Type="String" Name="FullName" Nullable="true" MaxLength="50" />
@@ -1038,6 +1054,7 @@
           <Property Type="String" Name="Address" Nullable="true" MaxLength="500" />
           <Property Type="String" Name="area" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="aid" Nullable="true" />
+          <Property Type="String" Name="UpdateEmailTime" Nullable="true" MaxLength="30" />
         </ComplexType>
         <ComplexType Name="VT_GetAllFeeByConsignee_Result">
           <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
@@ -1066,6 +1083,7 @@
           <Property Type="String" Name="Address" Nullable="true" MaxLength="500" />
           <Property Type="String" Name="area" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="aid" Nullable="true" />
+          <Property Type="String" Name="UpdateEmailTime" Nullable="true" MaxLength="30" />
         </ComplexType>
         <ComplexType Name="VT_GetCustomerWithTransaction_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -1095,17 +1113,18 @@
           <Property Type="String" Name="bookbill" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="ShortName" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="CntrSize" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="PickupYard" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PickupYard" Nullable="true" MaxLength="500" />
           <Property Type="String" Name="transdate" Nullable="true" MaxLength="41" />
           <Property Type="String" Name="Phone" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="ZaloId" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="Shipping" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Caller" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Caller" Nullable="true" MaxLength="1000" />
           <Property Type="String" Name="Inquiry" Nullable="true" />
           <Property Type="String" Name="ExpireDate" Nullable="true" MaxLength="51" />
           <Property Type="String" Name="Note" Nullable="true" />
-          <Property Type="String" Name="ReturnYard" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ReturnYard" Nullable="true" MaxLength="500" />
           <Property Type="String" Name="Location" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="TruckNo" Nullable="true" MaxLength="20" />
         </ComplexType>
         <ComplexType Name="VT_GetTransacstionById_Result">
           <Property Type="String" Name="Name" Nullable="true" MaxLength="200" />
@@ -1274,6 +1293,7 @@
           <Property Type="String" Name="driver" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="TripNote" Nullable="true" MaxLength="500" />
           <Property Type="String" Name="CntrNo" Nullable="true" MaxLength="13" />
+          <Property Type="Int32" Name="nightstore" Nullable="false" />
         </ComplexType>
         <EntityType Name="StandardFee">
           <Key>
@@ -1321,6 +1341,7 @@
           <EntitySetMapping Name="Consignees">
             <EntityTypeMapping TypeName="TruckingVSMModel.Consignee">
               <MappingFragment StoreEntitySet="Consignee">
+                <ScalarProperty Name="UpdateEmailTime" ColumnName="UpdateEmailTime" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -1550,6 +1571,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="TruckingVSMModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="EmailPass" ColumnName="EmailPass" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -2399,6 +2421,99 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetAllConsigneeWithArea1" FunctionName="TruckingVSMModel.Store.VT_GetAllConsigneeWithArea">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetAllConsigneeWithArea_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TaxCode" ColumnName="TaxCode" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="area" ColumnName="area" />
+                <ScalarProperty Name="aid" ColumnName="aid" />
+                <ScalarProperty Name="UpdateEmailTime" ColumnName="UpdateEmailTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetAllConsigneeWithArea2" FunctionName="TruckingVSMModel.Store.VT_GetAllConsigneeWithArea">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetAllConsigneeWithArea_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TaxCode" ColumnName="TaxCode" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="area" ColumnName="area" />
+                <ScalarProperty Name="aid" ColumnName="aid" />
+                <ScalarProperty Name="UpdateEmailTime" ColumnName="UpdateEmailTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetConsigneeWithArea1" FunctionName="TruckingVSMModel.Store.VT_GetConsigneeWithArea">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetConsigneeWithArea_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TaxCode" ColumnName="TaxCode" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="area" ColumnName="area" />
+                <ScalarProperty Name="aid" ColumnName="aid" />
+                <ScalarProperty Name="UpdateEmailTime" ColumnName="UpdateEmailTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_DailyPlan5" FunctionName="TruckingVSMModel.Store.VT_DailyPlan">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_DailyPlan_Result">
+                <ScalarProperty Name="TransportDate" ColumnName="TransportDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="laddress" ColumnName="laddress" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="cntr20" ColumnName="cntr20" />
+                <ScalarProperty Name="cntr40dc" ColumnName="cntr40dc" />
+                <ScalarProperty Name="cntr40hc" ColumnName="cntr40hc" />
+                <ScalarProperty Name="cntr45" ColumnName="cntr45" />
+                <ScalarProperty Name="doc" ColumnName="doc" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="bainang" ColumnName="bainang" />
+                <ScalarProperty Name="baiha" ColumnName="baiha" />
+                <ScalarProperty Name="Payer" ColumnName="Payer" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="driver" ColumnName="driver" />
+                <ScalarProperty Name="TripNote" ColumnName="TripNote" />
+                <ScalarProperty Name="CntrNo" ColumnName="CntrNo" />
+                <ScalarProperty Name="nightstore" ColumnName="nightstore" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VT_GetSMSInfo3" FunctionName="TruckingVSMModel.Store.VT_GetSMSInfo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TruckingVSMModel.VT_GetSMSInfo_Result">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="bookbill" ColumnName="bookbill" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="CntrSize" ColumnName="CntrSize" />
+                <ScalarProperty Name="PickupYard" ColumnName="PickupYard" />
+                <ScalarProperty Name="transdate" ColumnName="transdate" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="ZaloId" ColumnName="ZaloId" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="Caller" ColumnName="Caller" />
+                <ScalarProperty Name="Inquiry" ColumnName="Inquiry" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ReturnYard" ColumnName="ReturnYard" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="TruckNo" ColumnName="TruckNo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

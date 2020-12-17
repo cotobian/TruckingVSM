@@ -50,7 +50,7 @@ namespace TruckingVSM.Models
         {
             using (TruckingVSMEntities db = new TruckingVSMEntities())
             {
-                int rid = Int32.Parse(username.Substring(username.LastIndexOf("|") + 1));
+                int rid = Int32.Parse(username.Split('|')[2]);
                 var userRoles = db.Roles.Where(r => r.ID == rid).Select(r => r.Name);
                 return userRoles.DefaultIfEmpty().ToArray();
             }

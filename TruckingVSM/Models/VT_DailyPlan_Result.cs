@@ -35,5 +35,6 @@ namespace TruckingVSM.Models
         public string driver { get; set; }
         public string TripNote { get; set; }
         public string CntrNo { get; set; }
+        public int nightstore { get; set; }
     }
 }

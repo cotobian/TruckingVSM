@@ -23,7 +23,7 @@ namespace TruckingVSM.Controllers
             if(provider.ValidateUser(username,password) == true)
             {
                 User user = db.Users.Where(u => u.Username == username).FirstOrDefault();
-                FormsAuthentication.SetAuthCookie(username + "|" + user.FullName + "|" + user.RolesID, true);
+                FormsAuthentication.SetAuthCookie(username + "|" + user.FullName + "|" + user.RolesID + "|" + user.Email + "|" + user.EmailPass, true);
                 return Redirect("/Index/Index");
             }
             else

@@ -28,7 +28,7 @@ namespace TruckingVSM.Controllers
         }
 
         //edit StdFee
-        [CustomAuthorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult AddOrEdit(int id = 0)
         {
             if (id == 0) return View(new StandardFee());
@@ -64,7 +64,7 @@ namespace TruckingVSM.Controllers
         }
 
         //delete StandardFee
-        [CustomAuthorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Delete(int id)
         {
