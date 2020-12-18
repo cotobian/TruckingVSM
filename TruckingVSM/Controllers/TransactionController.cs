@@ -382,11 +382,12 @@ namespace TruckingVSM.Controllers
                     string senderPass = User.Identity.Name.Split('|')[4];
                     string cname = db.Consignees.Where(c => c.ID == tInfo.ConsigneeID).Select(c => c.ShortName).FirstOrDefault();
                     string recipe = "trucking@viconshipdng.com.vn";
+                    //string recipe = "cotobian@gmail.com";
                     string body = "<html><head><style>p{line-height:13px;}</style></head><body><p>Dear Trucking,</p><p>BỔ SUNG KẾ HOẠCH</p><p>" 
                     + tInfo.Type + " - " + cname + "</p><p>Bill/Booking:" +
                     tInfo.Booking + tInfo.Bill + "</p>" + contalert;
                     string subject = "BỔ SUNG KẾ HOẠCH " + tInfo.Type + " - " + cname + " - " + tInfo.Booking + tInfo.Bill;
-                    //mail.SendEmail(sender, senderPass, recipe, subject, body, "");
+                    mail.SendEmail(sender, senderPass, recipe, subject, body, "");
                 }
 
                 db.VT_ResetTotalPrice(Int32.Parse(TransactionID));
