@@ -25,39 +25,26 @@ namespace TruckingVSM.Controllers
         public JsonResult SendById(string id)
         {
             int result = 0;
+            string loaihang = "";
             VT_GetSMSInfo_Result param = db.VT_GetSMSInfo(int.Parse(id)).FirstOrDefault();
             if (param.Type.Contains("Xuất") || param.Type.Contains("Xuat"))
             {
-                result = zalo.sendMessage(param.ZaloId, 
-                    "Số Xe: " + param.TruckNo +
-                    "\nLỆNH ĐIỀU VẬN: HÀNG XUẤT \nNgày vận chuyển:" + param.transdate + 
-                    "\nKH:" + param.ShortName +
-                    "\nBILL/BOOKING: " + param.bookbill + 
-                    "\nADD:" + param.Location + 
-                    "\nLOẠI: " + param.CntrSize + 
-                    "-" + param.Shipping + 
-                    "\nLH:" + param.Caller + 
-                    "\nYC: " + param.Inquiry + 
-                    "\nTàu chạy/Hết hạn: " + param.ExpireDate + 
-                    "\nBốc cont/Hạ cont:" + param.PickupYard + @"\" + param.ReturnYard 
-                    + "\nGhi chú: " + param.Note);
+                loaihang = "XUẤT";
             }
-            else
-            {
-                result = zalo.sendMessage(param.ZaloId,
-                    "Số Xe: " + param.TruckNo +
-                    "LỆNH ĐIỀU VẬN: HÀNG NHẬP \nNgày vận chuyển:" + param.transdate + 
-                    "\nKH:" + param.ShortName +
-                    "\nBILL/BOOKING: " + param.bookbill +
-                    "\nADD:" + param.Location + 
-                    "\nLOẠI: " + param.CntrSize + 
-                    "-" + param.Shipping + 
-                    "\n LH:" + param.Caller + 
-                    "\nYC: " + param.Inquiry + 
-                    "\nTàu chạy/Hết hạn: " + param.ExpireDate + 
-                    "\nBốc cont/Hạ cont:" + param.PickupYard + @"\" + param.ReturnYard
-                    + "\nGhi chú: " + param.Note);
-            }
+            else loaihang = "NHẬP";
+            result = zalo.sendMessage(param.ZaloId, 
+            "LỆNH ĐIỀU VẬN: HÀNG " + loaihang + 
+            "\nNgày vận chuyển:" + param.transdate +
+            "\nSố Xe: " + param.TruckNo +
+            "\nKhách Hàng:" + param.ShortName +
+            "\nBILL/BOOKING: " + param.bookbill +
+            "\nĐịa chỉ:" + param.Location + 
+            "\nLOẠI: " + param.CntrSize + "-" + param.Shipping + 
+            "\nLH:" + param.Caller + 
+            "\nYC: " + param.Inquiry + 
+            "\nTàu chạy/Hết hạn: " + param.ExpireDate + 
+            "\nBốc cont/Hạ cont:" + param.PickupYard + @"/" + param.ReturnYard + 
+            "\nGhi chú: " + param.Note);
             if(result <= 0)
             {
                 return Json(new { success = false, message = "Gửi tin zalo thất bại" }, JsonRequestBehavior.AllowGet);
@@ -69,71 +56,31 @@ namespace TruckingVSM.Controllers
         public JsonResult DeleteById(string id)
         {
             int result = 0;
+            string loaihang = "";
             VT_GetSMSInfo_Result param = db.VT_GetSMSInfo(int.Parse(id)).FirstOrDefault();
             if (param.Type.Contains("Xuất") || param.Type.Contains("Xuat"))
             {
-                result = zalo.sendMessage(param.ZaloId, "LỆNH ĐIỀU VẬN: HÀNG XUẤT - HỦY KẾ HOẠCH \nNgày vận chuyển:" + param.transdate + "\nKH:" + param.ShortName +
-                    "\nADD:" + param.Location + "\nLOẠI: " + param.CntrSize + "-" + param.Shipping + "\nLH:" +
-                    param.Caller + "\nYC: " + param.Inquiry + "\nTàu chạy/Hết hạn: " + param.ExpireDate + "\nBốc cont/Hạ rỗng:" + param.PickupYard
-                    + "\nGhi chú: " + param.Note);
+                loaihang = "XUẤT";
             }
-            else
-            {
-                result = zalo.sendMessage(param.ZaloId, "LỆNH ĐIỀU VẬN: HÀNG NHẬP - HỦY KẾ HOẠCH \nNgày vận chuyển:" + param.transdate + "\nKH:" + param.ShortName +
-                    "\nADD:" + param.Location + "\nLOẠI: " + param.CntrSize + "-" + param.Shipping + "\nLH:" +
-                    param.Caller + "\nYC: " + param.Inquiry + "\nTàu chạy/Hết hạn: " + param.ExpireDate + "\nBốc cont/Hạ rỗng:" + param.PickupYard
-                    + "\nGhi chú: " + param.Note);
-            }
+            else loaihang = "NHẬP";
+            result = zalo.sendMessage(param.ZaloId, 
+            "LỆNH ĐIỀU VẬN: HÀNG " + loaihang + " - HỦY KẾ HOẠCH" + 
+            "\nNgày vận chuyển:" + param.transdate +
+            "\nKhách Hàng:" + param.ShortName +
+            "\nBILL/BOOKING: " + param.bookbill +
+            "\nĐịa chỉ:" + param.Location + 
+            "\nLOẠI: " + param.CntrSize + "-" + param.Shipping + 
+            "\nLH:" + param.Caller + 
+            "\nYC: " + param.Inquiry + 
+            "\nTàu chạy/Hết hạn: " + param.ExpireDate + 
+            "\nBốc cont/Hạ rỗng:" + param.PickupYard + @"/" + param.ReturnYard +
+            "\nGhi chú: " + param.Note);
             if (result <= 0)
             {
                 return Json(new { success = false, message = "Gửi tin zalo thất bại" }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { success = true, message = "Gửi tin zalo thành công" }, JsonRequestBehavior.AllowGet);
         }
-        ////ham tim kiem va send SMS bang id
-        //[HttpPost]
-        //public async Task<JsonResult> SendById(string id)
-        //{
-        //    string result = "";
-        //    string sessionid = await loginSMS();
-        //    string keepsessionresult = await keepSession(sessionid);
-        //    VT_GetSMSInfo_Result param = db.VT_GetSMSInfo(int.Parse(id)).FirstOrDefault();
-        //    if(param.Type.Contains("Xuất")|| param.Type.Contains("Xuat"))
-        //    {
-        //        result = await sendCreateSMSExport(sessionid, param.Phone, param.ShortName, param.transdate,
-        //        param.Location, param.CntrSize, param.PickupYard, param.bookbill);
-        //        string logout = await logoutSMS(sessionid);
-        //    }
-        //    else
-        //    {
-        //        result = await sendCreateSMSImport(sessionid, param.Phone, param.ShortName, param.transdate,
-        //        param.Location, param.CntrSize, param.PickupYard, param.bookbill);
-        //        string logout = await logoutSMS(sessionid);
-        //    }
-        //    return Json(new { success = true, message = result }, JsonRequestBehavior.AllowGet);
-        //}
-        ////ham tim kiem va gui SMS huy bang id
-        //[HttpPost]
-        //public async Task<JsonResult> DeleteById(string id)
-        //{
-        //    string result = "";
-        //    string sessionid = await loginSMS();
-        //    string keepsessionresult = await keepSession(sessionid);
-        //    VT_GetSMSInfo_Result param = db.VT_GetSMSInfo(int.Parse(id)).FirstOrDefault();
-        //    if (param.Type.Contains("Xuất") || param.Type.Contains("Xuat"))
-        //    {
-        //        result = await sendDeleteSMSExport(sessionid, param.Phone, param.ShortName, param.transdate,
-        //        param.Location, param.CntrSize, param.PickupYard, param.bookbill);
-        //        string logout = await logoutSMS(sessionid);
-        //    }
-        //    else
-        //    {
-        //        result = await sendDeleteSMSImport(sessionid, param.Phone, param.ShortName, param.transdate,
-        //        param.Location, param.CntrSize, param.PickupYard, param.bookbill);
-        //        string logout = await logoutSMS(sessionid);
-        //    }
-        //    return Json(new { success = true, message = result }, JsonRequestBehavior.AllowGet);
-        //}
 
         //ham gui SMS huy bang id tra ve string
         public async Task<string> DeleteByIdString(string id)
