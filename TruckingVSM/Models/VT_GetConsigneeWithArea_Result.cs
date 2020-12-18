@@ -20,5 +20,6 @@ namespace TruckingVSM.Models
         public string Address { get; set; }
         public string area { get; set; }
         public Nullable<int> aid { get; set; }
+        public string UpdateEmailTime { get; set; }
     }
 }

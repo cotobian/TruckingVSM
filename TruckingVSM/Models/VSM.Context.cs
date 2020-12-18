@@ -820,5 +820,46 @@ namespace TruckingVSM.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VT_GetTripByDate_Result>("VT_GetTripByDate4", startParameter, endParameter);
         }
+    
+        public virtual ObjectResult<VT_GetAllConsigneeWithArea_Result> VT_GetAllConsigneeWithArea1()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VT_GetAllConsigneeWithArea_Result>("VT_GetAllConsigneeWithArea1");
+        }
+    
+        public virtual ObjectResult<VT_GetAllConsigneeWithArea_Result> VT_GetAllConsigneeWithArea2()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VT_GetAllConsigneeWithArea_Result>("VT_GetAllConsigneeWithArea2");
+        }
+    
+        public virtual ObjectResult<VT_GetConsigneeWithArea_Result> VT_GetConsigneeWithArea1(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VT_GetConsigneeWithArea_Result>("VT_GetConsigneeWithArea1", idParameter);
+        }
+    
+        public virtual ObjectResult<VT_DailyPlan_Result> VT_DailyPlan5(Nullable<System.DateTime> start, Nullable<System.DateTime> end)
+        {
+            var startParameter = start.HasValue ?
+                new ObjectParameter("start", start) :
+                new ObjectParameter("start", typeof(System.DateTime));
+    
+            var endParameter = end.HasValue ?
+                new ObjectParameter("end", end) :
+                new ObjectParameter("end", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VT_DailyPlan_Result>("VT_DailyPlan5", startParameter, endParameter);
+        }
+    
+        public virtual ObjectResult<VT_GetSMSInfo_Result> VT_GetSMSInfo3(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VT_GetSMSInfo_Result>("VT_GetSMSInfo3", idParameter);
+        }
     }
 }

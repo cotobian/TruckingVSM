@@ -24,20 +24,38 @@ namespace TruckingVSM.Controllers
         [HttpPost]
         public JsonResult SendById(string id)
         {
-             int result = 0;
+            int result = 0;
             VT_GetSMSInfo_Result param = db.VT_GetSMSInfo(int.Parse(id)).FirstOrDefault();
             if (param.Type.Contains("Xuất") || param.Type.Contains("Xuat"))
             {
-                result = zalo.sendMessage(param.ZaloId, "LỆNH ĐIỀU VẬN: HÀNG XUẤT \nNgày vận chuyển:" + param.transdate + "\nKH:" + param.ShortName +
-                    "\nADD:" + param.Location + "\nLOẠI: " + param.CntrSize + "-" + param.Shipping + "\nLH:" +
-                    param.Caller + "\nYC: " + param.Inquiry + "\nTàu chạy/Hết hạn: " + param.ExpireDate + "\nBốc cont/Hạ rỗng:" + param.PickupYard
+                result = zalo.sendMessage(param.ZaloId, 
+                    "Số Xe: " + param.TruckNo +
+                    "\nLỆNH ĐIỀU VẬN: HÀNG XUẤT \nNgày vận chuyển:" + param.transdate + 
+                    "\nKH:" + param.ShortName +
+                    "\nBILL/BOOKING: " + param.bookbill + 
+                    "\nADD:" + param.Location + 
+                    "\nLOẠI: " + param.CntrSize + 
+                    "-" + param.Shipping + 
+                    "\nLH:" + param.Caller + 
+                    "\nYC: " + param.Inquiry + 
+                    "\nTàu chạy/Hết hạn: " + param.ExpireDate + 
+                    "\nBốc cont/Hạ cont:" + param.PickupYard + @"\" + param.ReturnYard 
                     + "\nGhi chú: " + param.Note);
             }
             else
             {
-                result = zalo.sendMessage(param.ZaloId, "LỆNH ĐIỀU VẬN: HÀNG NHẬP \nNgày vận chuyển:" + param.transdate + "\nKH:" + param.ShortName +
-                    "\nADD:" + param.Location + "\nLOẠI: " + param.CntrSize + "-" + param.Shipping + "\n LH:" +
-                    param.Caller + "\nYC: " + param.Inquiry + "\nTàu chạy/Hết hạn: " + param.ExpireDate + "\nBốc cont/Hạ rỗng:" + param.PickupYard
+                result = zalo.sendMessage(param.ZaloId,
+                    "Số Xe: " + param.TruckNo +
+                    "LỆNH ĐIỀU VẬN: HÀNG NHẬP \nNgày vận chuyển:" + param.transdate + 
+                    "\nKH:" + param.ShortName +
+                    "\nBILL/BOOKING: " + param.bookbill +
+                    "\nADD:" + param.Location + 
+                    "\nLOẠI: " + param.CntrSize + 
+                    "-" + param.Shipping + 
+                    "\n LH:" + param.Caller + 
+                    "\nYC: " + param.Inquiry + 
+                    "\nTàu chạy/Hết hạn: " + param.ExpireDate + 
+                    "\nBốc cont/Hạ cont:" + param.PickupYard + @"\" + param.ReturnYard
                     + "\nGhi chú: " + param.Note);
             }
             if(result <= 0)

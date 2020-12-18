@@ -20,5 +20,6 @@ namespace TruckingVSM.Models
         public string Email { get; set; }
         public Nullable<int> RolesID { get; set; }
         public string FullName { get; set; }
+        public string EmailPass { get; set; }
     }
 }

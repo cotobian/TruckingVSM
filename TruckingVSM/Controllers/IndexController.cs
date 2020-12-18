@@ -4,6 +4,8 @@ using System.Data.Entity;
 using TruckingVSM.Models;
 using System.Web.Mvc;
 using System.Threading.Tasks;
+using System;
+using System.Globalization;
 
 namespace TruckingVSM.Controllers
 {
@@ -81,6 +83,7 @@ namespace TruckingVSM.Controllers
                 c.TaxCode = con.TaxCode;
                 c.AreaID = con.aid;
                 c.ShortName = con.ShortName;
+                c.UpdateEmailTime = TimeSpan.Parse(con.UpdateEmailTime);
                 db.Entry(c).State = EntityState.Modified;
                 db.SaveChanges();
                 return Json(new { success = true, message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);

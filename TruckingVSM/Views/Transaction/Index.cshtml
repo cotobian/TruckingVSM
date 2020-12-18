@@ -154,6 +154,13 @@
            return formatter.format(total);
        }
 
+       //function resetInput() {
+       //    var inputList = document.querySelectorAll(".form-control");
+       //    inputList.each(function (index) {
+       //        inputList[index].text = "";
+       //    })
+       //}
+
        $(document).ready(function () {
            $("#expdatetxt").datepicker({ dateFormat: 'dd/mm/yy' });
            $("#transporttxt").datetimepicker({
@@ -179,6 +186,7 @@
                            globalPosition: "top center",
                            className: "success"
                        });
+                       //resetInput();
                    }
                })
            });
@@ -331,6 +339,7 @@
                                        className: "success"
                                    });
                                    $("#TransactionID").val(data.tranid);
+                                   
                                    $.each(data.price, function (index) {
                                        $('#feelist')
                                           .append($('<option>', { value: data.price[index].ShortName })

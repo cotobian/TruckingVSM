@@ -28,5 +28,6 @@ namespace TruckingVSM.Models
         public string Note { get; set; }
         public string ReturnYard { get; set; }
         public string Location { get; set; }
+        public string TruckNo { get; set; }
     }
 }

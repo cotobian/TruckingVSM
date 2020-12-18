@@ -1,0 +1,26 @@
+﻿body {
+    box-sizing: border-box;
+
+}
+
+.carousel-panel{
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    height: 100vh;
+}
+
+#panel1{
+    background-image: url(/Content/images/trucking1.jpg);
+}
+
+#panel2{
+    background-image: url(/Content/images/trucking2.jpg);
+}
+
+#panel3{
+    background-image: url(/Content/images/trucking3.jpg);
+}
+
+#panel4{
+    background-image: url(/Content/images/trucking4.jpg);
+}

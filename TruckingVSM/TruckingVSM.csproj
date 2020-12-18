@@ -225,10 +225,13 @@
     <Compile Include="Areas\Admin\Code\UserSession.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\LoginViewModel.cs" />
+    <Compile Include="Common\Email.cs" />
+    <Compile Include="Common\Logging.cs" />
+    <Compile Include="Common\Security.cs" />
+    <Compile Include="Common\Zalo.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AreaController.cs" />
     <Compile Include="Controllers\CoordinateController.cs" />
-    <Compile Include="Controllers\CustomAuthorize.cs" />
     <Compile Include="Controllers\CustomMembershipProvider.cs" />
     <Compile Include="Controllers\DriverController.cs" />
     <Compile Include="Controllers\FeeByConsigneeController.cs" />

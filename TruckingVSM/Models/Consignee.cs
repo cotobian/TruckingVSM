@@ -29,6 +29,7 @@ namespace TruckingVSM.Models
         public Nullable<System.DateTime> update_time { get; set; }
         public Nullable<int> AreaID { get; set; }
         public string ShortName { get; set; }
+        public Nullable<System.TimeSpan> UpdateEmailTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FeeByConsignee> FeeByConsignees { get; set; }

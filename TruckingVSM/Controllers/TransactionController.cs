@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using TruckingVSM.Common;
 
 namespace TruckingVSM.Controllers
 {
@@ -38,7 +39,7 @@ namespace TruckingVSM.Controllers
 
         //ham tao giao dịch mới
         [HttpPost]
-        public ActionResult AddNew(string Type,string Booking,string Bill, string Note,string PickupYard, string ReturnYard,
+        public async Task<JsonResult> AddNew(string Type,string Booking,string Bill, string Note,string PickupYard, string ReturnYard,
             string ConsigneeID,string ExpireDate,string Shipping,string ChangePlan, string TransportDate,string StuffDate,
             string StuffWH,string Weight, string Payer,string Caller,string Inquiry,string Commodity)
         {
@@ -69,12 +70,12 @@ namespace TruckingVSM.Controllers
                 t.Shipping = Shipping;
                 t.update_time = DateTime.Now;
                 db.Transactions.Add(t);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 int id = t.ID;
                 int cid = Int32.Parse(ConsigneeID);
                 var price = db.FeeByConsignees.Where(x => x.ConsigneeID == cid).Select(x => new { x.Name, x.ShortName }).ToList();
-                return Json(new { success = true, message = "Tạo giao dịch thành công!", tranid = id, price }, JsonRequestBehavior.AllowGet);
 
+                return Json(new { success = true, message = "Tạo giao dịch thành công!", tranid = id, price }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -230,6 +231,7 @@ namespace TruckingVSM.Controllers
             }
             catch(Exception ex)
             {
+                help.LogError(ex);
                 return Json(new { success = false, message = "Lỗi xóa giao dịch!" }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -345,26 +347,49 @@ namespace TruckingVSM.Controllers
                     return Json(new { success = false, message = "Địa điểm nhận hàng sai!" }, JsonRequestBehavior.AllowGet);
                 }
                 DateTime now = DateTime.Now;
+                string contalert = "";
                 if (!string.IsNullOrEmpty(Cntr20))
                 {
                     db.VT_AddDetailFast(Int32.Parse(TransactionID), Int32.Parse(ConsigneeID), Int32.Parse(LocationID), Int32.Parse(Cntr20), "Cont 20", "", now);
+                    contalert = contalert + "<p>Cont 20 - Số lượng: " + Cntr20 + " Cont</p>";
                 }
                 if (!string.IsNullOrEmpty(Cntr40DC))
                 {
                     db.VT_AddDetailFast(Int32.Parse(TransactionID), Int32.Parse(ConsigneeID), Int32.Parse(LocationID), Int32.Parse(Cntr40DC), "Cont 40DC", "", now);
+                    contalert = contalert + "<p>Cont 40DC - Số lượng: " + Cntr40DC + " Cont</p>";
                 }
                 if (!string.IsNullOrEmpty(Cntr40HC))
                 {
                     db.VT_AddDetailFast(Int32.Parse(TransactionID), Int32.Parse(ConsigneeID), Int32.Parse(LocationID), Int32.Parse(Cntr40HC), "Cont 40HC", "", now);
+                    contalert = contalert + "<p>Cont 40HC - Số lượng: " + Cntr40HC + " Cont</p>";
                 }
                 if (!string.IsNullOrEmpty(Cntr45))
                 {
                     db.VT_AddDetailFast(Int32.Parse(TransactionID), Int32.Parse(ConsigneeID), Int32.Parse(LocationID), Int32.Parse(Cntr45), "Cont 45", "", now);
+                    contalert = contalert + "<p>Cont 45 - Số lượng: " + Cntr45 + " Cont</p>";
                 }
                 if (!string.IsNullOrEmpty(HangLe))
                 {
 
                 }
+                
+                if (DateTime.Now.Hour >= 14)
+                {
+                    int transid = Int32.Parse(TransactionID);
+                    var tInfo = db.Transactions.Select(t => new { t.Bill, t.Booking, t.ConsigneeID, t.ID, t.Type }).Where(t => t.ID == transid).FirstOrDefault();
+                    Email mail = new Email();
+                    string sender = User.Identity.Name.Split('|')[3];
+                    string senderPass = User.Identity.Name.Split('|')[4];
+                    string cname = db.Consignees.Where(c => c.ID == tInfo.ConsigneeID).Select(c => c.ShortName).FirstOrDefault();
+                    string recipe = "trucking@viconshipdng.com.vn";
+                    //string recipe = "cotobian@gmail.com";
+                    string body = "<html><head><style>p{line-height:13px;}</style></head><body><p>Dear Trucking,</p><p>BỔ SUNG KẾ HOẠCH</p><p>" 
+                    + tInfo.Type + " - " + cname + "</p><p>Bill/Booking:" +
+                    tInfo.Booking + tInfo.Bill + "</p>" + contalert;
+                    string subject = "BỔ SUNG KẾ HOẠCH " + tInfo.Type + " - " + cname + " - " + tInfo.Booking + tInfo.Bill;
+                    mail.SendEmail(sender, senderPass, recipe, subject, body, "");
+                }
+
                 db.VT_ResetTotalPrice(Int32.Parse(TransactionID));
                 return Json(new { success = true, message = "Tạo chi tiết giao dịch thành công!" }, JsonRequestBehavior.AllowGet);
             }
