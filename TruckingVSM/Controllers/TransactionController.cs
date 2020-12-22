@@ -122,8 +122,9 @@ namespace TruckingVSM.Controllers
             {
                 Zalo zalo = new Zalo();
                 zalo.DeleteById(id, db);
-                Transaction con = db.Transactions.Where(x => x.ID == id).FirstOrDefault<Transaction>();
-                db.Transactions.Remove(con);
+                //Transaction con = db.Transactions.Where(x => x.ID == id).FirstOrDefault<Transaction>();
+                //db.Transactions.Remove(con);
+                db.VT_DeleteTransactionById(id);
                 db.SaveChanges();
                 return Json(new { success = true, message = "Xóa giao dịch thành công!" }, JsonRequestBehavior.AllowGet);
             }
